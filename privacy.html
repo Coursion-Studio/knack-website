@@ -68,7 +68,13 @@
 
       <h2>Third-party services</h2>
       <p>
-        Knack does not use any third-party analytics, advertising, crash reporting, or SDKs.
+        Knack uses no advertising SDKs and no tracking networks. It sends two kinds of
+        anonymous telemetry, both of which you can turn off in Settings → Privacy
+        (&ldquo;Share anonymous usage &amp; crash data&rdquo;):
+        <strong>crash reports</strong> via Sentry (EU-hosted) — app version and a technical
+        stack trace, never your files or their contents — and <strong>usage counts</strong>
+        via PostHog (EU-hosted) — anonymous events like &ldquo;a tool ran&rdquo;, never what
+        it ran on. No user profile is created and nothing is linked to your identity.
       </p>
 
       <h2>Contact</h2>
