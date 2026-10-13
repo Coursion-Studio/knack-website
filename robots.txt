@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://knack.coursion.studio/sitemap.xml

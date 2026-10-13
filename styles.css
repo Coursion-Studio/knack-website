@@ -812,3 +812,7 @@ footer a:hover { color: var(--text-primary); }
 .prose a:hover {
   text-decoration-color: var(--brand-pink);
 }
+
+.landing-shot { width: 100%; border-radius: 14px; margin: 8px 0 18px; box-shadow: 0 30px 80px rgba(0,0,0,.45); }
+.landing-steps { padding-left: 1.2em; line-height: 1.8; font-size: 17px; }
+.landing-more { list-style: none; padding: 0; margin-top: 24px; line-height: 2; }
