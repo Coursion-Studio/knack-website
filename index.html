@@ -3,380 +3,542 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Knack — The complete Mac toolkit</title>
-  <meta name="description" content="20 native Mac tools for images, PDFs, video, audio, and App Store marketing. Runs on-device. No uploads, no accounts, no subscription." />
+  <title>Knack — 20+ native Mac tools in one app</title>
+  <meta name="description" content="23 native Mac tools for images, PDFs, audio and video in one app: convert HEIC, remove backgrounds, extract text, compress, transcribe and more. Files stay on your Mac. 11 tools free forever, Knack Pro $4.99 once." />
+  <link rel="canonical" href="https://knack.coursion.studio/" />
   <link rel="icon" type="image/png" href="screenshots/icon.png" />
   <link rel="apple-touch-icon" href="screenshots/icon.png" />
-  <link rel="stylesheet" href="styles.css" />
-  <meta property="og:title" content="Knack — The complete Mac toolkit" />
-  <meta property="og:description" content="20 native Mac tools. On-device. No uploads. No subscription. One-time $4.99 for Pro." />
+  <link rel="stylesheet" href="stage.css?v=1d5ceac846" />
+  <link rel="stylesheet" href="knack.css?v=841b330dea" />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://knack.coursion.studio/" />
+  <meta property="og:title" content="Knack — 20+ native Mac tools in one app" />
+  <meta property="og:description" content="Convert, compress, cut out, scan, transcribe and tidy, all on your Mac. 11 tools free forever, Knack Pro $4.99 once, not a subscription." />
   <meta property="og:image" content="https://knack.coursion.studio/screenshots/home-page.png" />
-  <meta name="theme-color" content="#0E1224" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="theme-color" content="#0E0C14" />
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "SoftwareApplication",
+    "name": "Knack",
+    "url": "https://knack.coursion.studio/",
+    "image": "https://knack.coursion.studio/screenshots/icon.png",
+    "applicationCategory": "UtilitiesApplication",
+    "operatingSystem": "macOS 15 or later",
+    "description": "23 native Mac tools for images, PDFs, audio and video in one app. Files are processed on your Mac.",
+    "downloadUrl": "https://apps.apple.com/app/id6762058455",
+    "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+    "publisher": { "@type": "Organization", "name": "Coursion Studio" }
+  }
+  </script>
+  <script>document.documentElement.classList.add("js");window.__rv=setTimeout(function(){document.documentElement.classList.add("reveal-all")},4000);</script>
+  <script defer src="palettes.js?v=5d2d7b0998"></script>
+  <script>
+    window.STAGE = {
+      download: "https://apps.apple.com/app/id6762058455",
+      palette: "aurora",
+      launcher: {
+        label: "Knack",
+        demo: "heic",
+        kind: "Tool",
+        open: "Open",
+        opened: function (t) { return "In Knack, " + t + " opens now"; },
+        empty: "No tool by that name. Try “pdf” or “video”.",
+        items: [
+          { title: "Image Converter", sub: "Free · Image", glyph: "convert", keys: "heic png jpg jpeg webp tiff gif bmp convert resize format photo image" },
+          { title: "Image Compressor", sub: "Free · Image", glyph: "compress", keys: "compress shrink smaller size optimise optimize png jpeg jpg image" },
+          { title: "Image Upscaler", sub: "Free · Image", glyph: "upscale", keys: "upscale enlarge bigger 2x 4x resolution image" },
+          { title: "Photo Enhance", sub: "Free · Photo", glyph: "enhance", keys: "denoise sharpen noise grain enhance fix photo" },
+          { title: "Face Restoration", sub: "Free · Photo", glyph: "face", keys: "face portrait restore old blurry photo" },
+          { title: "Color Palette", sub: "Free · Colour", glyph: "palette", keys: "colour color palette swatch hex dominant" },
+          { title: "Color Picker", sub: "Free · Colour", glyph: "picker", keys: "colour color pick eyedropper hex rgb screen pixel" },
+          { title: "QR Code Generator", sub: "Free · Utility", glyph: "qr", keys: "qr code link url wifi" },
+          { title: "Video Converter", sub: "Free · Video", glyph: "video", keys: "video mp4 mov hevc h264 convert movie" },
+          { title: "Audio Converter", sub: "Free · Audio", glyph: "audio", keys: "audio mp3 wav aiff caf m4a sound soundtrack music convert" },
+          { title: "Cleaning Lock", sub: "Free · System", glyph: "lock", keys: "clean lock keyboard trackpad wipe" },
+          { title: "AI Background Remover", sub: "Pro · Image", glyph: "cutout", keys: "background bg remove cutout transparent subject" },
+          { title: "Smart Crop", sub: "Pro · Photo", glyph: "crop", keys: "crop instagram social ratio square" },
+          { title: "Document Scanner", sub: "Pro · PDF", glyph: "scan", keys: "scan scanner receipt document deskew pdf" },
+          { title: "Portrait Depth", sub: "Pro · Photo", glyph: "depth", keys: "portrait depth blur bokeh relight" },
+          { title: "Colorize B&W", sub: "Pro · Photo", glyph: "colorize", keys: "colorize colourise colour color black white bw old" },
+          { title: "Transcribe", sub: "Pro · Audio", glyph: "transcribe", keys: "transcribe whisper speech text srt vtt subtitles captions audio" },
+          { title: "App Store Screenshots", sub: "Pro · Design", glyph: "shots", keys: "app store screenshots marketing aso" },
+          { title: "App Icon Generator", sub: "Pro · Design", glyph: "appicon", keys: "icon icns favicon android ios app" },
+          { title: "PDF Toolkit", sub: "Pro · PDF", glyph: "pdf", keys: "pdf merge split combine extract compress pages" },
+          { title: "Text Extractor", sub: "Pro · Text", glyph: "ocr", keys: "ocr text extract read copy scan pdf" },
+          { title: "Tidy Folders", sub: "Pro · Files", glyph: "tidy", keys: "tidy sort organise organize folder downloads clean files" },
+          { title: "System Stats", sub: "Pro · System", glyph: "stats", keys: "cpu memory ram stats monitor menu bar battery network disk" }
+        ]
+      }
+    };
+  </script>
+  <script defer src="stage.js?v=bda7026e0e"></script>
+  <script defer src="knack.js?v=98ffa2af63"></script>
   <script defer src="https://polaris-backend-489776622782.europe-west1.run.app/api/v1/analytics/t.js" data-site="knack.coursion.studio"></script>
 </head>
 <body>
-  <div class="bg"></div>
+  <a class="skip" href="#find">Skip to the tour</a>
 
-  <div class="container">
-    <nav class="top">
-      <div class="brand">
-        <img src="screenshots/icon.png" alt="Knack" />
-        <span>Knack</span>
-      </div>
-      <div class="links">
-        <a href="#showcase">Tour</a>
+  <svg class="sprite" aria-hidden="true" focusable="false">
+    <symbol id="g-convert" viewBox="0 0 24 24"><rect x="3.5" y="7.5" width="12.5" height="12" rx="2.2"/><path d="M8 4.5h10.3a2.2 2.2 0 0 1 2.2 2.2V15"/><path d="m3.8 16.6 3.6-3.6 3 3 1.8-1.8 3.4 3.4"/></symbol>
+    <symbol id="g-compress" viewBox="0 0 24 24"><path d="M12 3.5v6m0 0-3-3m3 3 3-3M12 20.5v-6m0 0-3 3m3-3 3 3M4.5 12h15"/></symbol>
+    <symbol id="g-upscale" viewBox="0 0 24 24"><circle cx="10.5" cy="10.5" r="6.5"/><path d="m15.5 15.5 5 5M10.5 7.8v5.4M7.8 10.5h5.4"/></symbol>
+    <symbol id="g-enhance" viewBox="0 0 24 24"><path d="M10 3.5 11.7 8l4.3 1.6-4.3 1.6L10 15.5l-1.7-4.3L4 9.6 8.3 8z"/><path d="m17.5 14 .8 2.2 2.2.8-2.2.8-.8 2.2-.8-2.2-2.2-.8 2.2-.8z"/></symbol>
+    <symbol id="g-face" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5"/><path d="M8.6 14.3a4.4 4.4 0 0 0 6.8 0M9.2 9.6h.01M14.8 9.6h.01"/></symbol>
+    <symbol id="g-palette" viewBox="0 0 24 24"><path d="M12 3.5a8.5 8.5 0 1 0 0 17c1.4 0 2-1 1.6-2.1-.5-1.3.3-2.4 1.7-2.4H18a2.5 2.5 0 0 0 2.5-2.5c0-5.5-3.8-10-8.5-10z"/><path d="M7.8 11h.01M10.5 7.6h.01M15 8h.01"/></symbol>
+    <symbol id="g-picker" viewBox="0 0 24 24"><path d="M17 3.8a2.1 2.1 0 0 1 3 3l-2.6 2.6-3-3z"/><path d="m14.4 6.4 3.2 3.2M15.6 8.4l-8.9 8.9-2.2.7.7-2.2 8.9-8.9"/></symbol>
+    <symbol id="g-qr" viewBox="0 0 24 24"><rect x="4" y="4" width="6" height="6" rx="1.2"/><rect x="14" y="4" width="6" height="6" rx="1.2"/><rect x="4" y="14" width="6" height="6" rx="1.2"/><path d="M14 14h2.2v2.2H14zM19.5 14v.01M14 19.5h.01M17.5 17.5h2.5v2.5"/></symbol>
+    <symbol id="g-video" viewBox="0 0 24 24"><rect x="3.5" y="5" width="17" height="14" rx="2.5"/><path d="M7.5 5v14M16.5 5v14M3.5 9.6h4M3.5 14.4h4M16.5 9.6h4M16.5 14.4h4"/></symbol>
+    <symbol id="g-audio" viewBox="0 0 24 24"><path d="M4 10.5v3M8 7.5v9M12 4v16M16 8v8M20 10.5v3"/></symbol>
+    <symbol id="g-lock" viewBox="0 0 24 24"><rect x="3" y="9" width="18" height="11" rx="2.5"/><path d="M6.8 12.8h.01M10 12.8h.01M13.2 12.8h.01M16.6 12.8h.01M8 16.2h8M9 9V6.6a3 3 0 0 1 6 0V9"/></symbol>
+    <symbol id="g-cutout" viewBox="0 0 24 24"><rect x="3.5" y="3.5" width="17" height="17" rx="3.5" stroke-dasharray="2.6 2.8"/><circle cx="12" cy="10" r="3"/><path d="M6.9 18.6c.9-2.5 2.9-3.9 5.1-3.9s4.2 1.4 5.1 3.9"/></symbol>
+    <symbol id="g-crop" viewBox="0 0 24 24"><path d="M7 3v13.5a.5.5 0 0 0 .5.5H21"/><path d="M3 7h13.5a.5.5 0 0 1 .5.5V21"/></symbol>
+    <symbol id="g-scan" viewBox="0 0 24 24"><path d="M4 8.5V6a2 2 0 0 1 2-2h2.5M15.5 4H18a2 2 0 0 1 2 2v2.5M20 15.5V18a2 2 0 0 1-2 2h-2.5M8.5 20H6a2 2 0 0 1-2-2v-2.5"/><path d="M8.5 9h7M8.5 12h7M8.5 15h4.5"/></symbol>
+    <symbol id="g-depth" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5"/><path d="m14.6 3.9-3.6 6.3M20.1 9.8l-7.2.1M16.7 19l-3.6-6.2M9.4 20.1l3.6-6.3M3.9 14.2l7.2-.1M7.3 5l3.6 6.2"/></symbol>
+    <symbol id="g-colorize" viewBox="0 0 24 24"><path d="M19.8 4.2 11.4 12.6"/><path d="M11.4 12.6c-2.5-.2-4.3 1.3-4.5 3.4-.1 1.6-1 2.6-2.6 3.1 1.3.8 2.8 1.1 4.3 1 2.9-.2 4.9-2.3 4.7-5.1z"/></symbol>
+    <symbol id="g-transcribe" viewBox="0 0 24 24"><rect x="9" y="3.5" width="6" height="11" rx="3"/><path d="M5.5 11.5a6.5 6.5 0 0 0 13 0M12 18v2.5"/></symbol>
+    <symbol id="g-shots" viewBox="0 0 24 24"><rect x="3.5" y="4.5" width="10" height="15" rx="2"/><rect x="11" y="8" width="9.5" height="12.5" rx="2"/></symbol>
+    <symbol id="g-appicon" viewBox="0 0 24 24"><rect x="4" y="4" width="16" height="16" rx="4.6"/><path d="m9 15.5 3-7.2 3 7.2M10.1 13h3.8"/></symbol>
+    <symbol id="g-pdf" viewBox="0 0 24 24"><path d="M7 3.5h7l4 4v13H7z"/><path d="M14 3.5v4h4M9.6 12h5.8M9.6 15.5h5.8"/></symbol>
+    <symbol id="g-ocr" viewBox="0 0 24 24"><path d="M4 8.5V6a2 2 0 0 1 2-2h2.5M15.5 4H18a2 2 0 0 1 2 2v2.5M20 15.5V18a2 2 0 0 1-2 2h-2.5M8.5 20H6a2 2 0 0 1-2-2v-2.5"/><path d="M8.5 9h7M12 9v7"/></symbol>
+    <symbol id="g-tidy" viewBox="0 0 24 24"><path d="M3.5 13.5 6 5h12l2.5 8.5V18a1.5 1.5 0 0 1-1.5 1.5H5A1.5 1.5 0 0 1 3.5 18z"/><path d="M3.5 13.5h5l1 2h5l1-2h5"/></symbol>
+    <symbol id="g-stats" viewBox="0 0 24 24"><path d="M4 4v16h16"/><path d="m7.5 15 3.5-4 3 2.5 5-6.5"/></symbol>
+    <symbol id="g-calc" viewBox="0 0 24 24"><rect x="5" y="3.5" width="14" height="17" rx="2.5"/><path d="M8.5 7.5h7M8.5 12h.01M12 12h.01M15.5 12h.01M8.5 16h.01M12 16h.01M15.5 16h.01"/></symbol>
+  </svg>
+
+  <div class="bar">
+    <div class="bar-in">
+      <a class="bar-brand" href="#top"><img src="screenshots/icon.png" alt="" width="26" height="26" /><span>Knack</span></a>
+      <nav class="bar-nav" aria-label="Main">
+        <a href="#find">Tour</a>
         <a href="#tools">Tools</a>
         <a href="#pricing">Pricing</a>
-        <a href="privacy.html">Privacy</a>
-        <a href="press.html">Press</a>
-      </div>
-    </nav>
-
-    <header class="hero">
-      <img class="app-icon" src="screenshots/icon.png" alt="Knack app icon" />
-      <div class="eyebrow">The complete Mac toolkit</div>
-      <h1>20+ native tools,<br /><span class="grad">one window, zero uploads.</span></h1>
-      <p class="sub">
-        Image, PDF, audio, video, and a full suite of AI-powered Pro tools —
-        App Store screenshot designer, on-device transcription, document
-        scanner, depth-aware portrait effects, and more. Lives in your menu
-        bar, too, so colors and text are one keypress away. Everything runs
-        on your Mac. No uploads. No accounts. No subscription.
-      </p>
-      <div class="cta-row">
-        <a class="btn primary" href="https://apps.apple.com/app/id6762058455">Download on the Mac App Store</a>
-        <a class="btn outline" href="#showcase">Take the tour</a>
-      </div>
-    </header>
+      </nav>
+      <a class="bar-get" href="https://apps.apple.com/app/id6762058455" data-download>Download</a>
+    </div>
   </div>
 
-  <section class="hero-shot-wrap">
+  <header id="top" class="stage-hero reveal" data-live>
+    <div class="mesh" aria-hidden="true"><i class="m1"></i><i class="m2"></i><i class="m3"></i><i class="m4"></i></div>
     <div class="container">
-      <figure class="window shot-hero">
-        <img src="screenshots/home-page.png"
-             alt="Knack home dashboard showing all 20 native Mac tools"
-             width="1779" height="1162"
-             loading="eager" decoding="async" fetchpriority="high" />
-      </figure>
-      <div class="hero-stats">
-        <div class="stat"><strong>20</strong><span>native tools</span></div>
-        <div class="stat"><strong>100%</strong><span>on-device</span></div>
-        <div class="stat"><strong>0</strong><span>uploads, ever</span></div>
-        <div class="stat"><strong>$4.99</strong><span>one-time, for Pro</span></div>
+      <div class="bar-space" aria-hidden="true"></div>
+
+      <div class="fan" role="img" aria-label="The Knack app icon with eight of its tools fanned out beneath it: AI Background Remover, Image Converter, PDF Toolkit, Text Extractor, Image Compressor, Transcribe, System Stats and Tidy Folders.">
+        <img class="fan-icon" src="screenshots/icon.png" alt="" width="160" height="160" fetchpriority="high" />
+        <span class="fan-item"><span class="tile"><svg><use href="#g-cutout"/></svg></span><b>Cutout</b></span>
+        <span class="fan-item"><span class="tile"><svg><use href="#g-convert"/></svg></span><b>Converter</b></span>
+        <span class="fan-item"><span class="tile"><svg><use href="#g-pdf"/></svg></span><b>PDF Toolkit</b></span>
+        <span class="fan-item"><span class="tile"><svg><use href="#g-ocr"/></svg></span><b>Text Extractor</b></span>
+        <span class="fan-item"><span class="tile"><svg><use href="#g-compress"/></svg></span><b>Compressor</b></span>
+        <span class="fan-item"><span class="tile"><svg><use href="#g-transcribe"/></svg></span><b>Transcribe</b></span>
+        <span class="fan-item"><span class="tile"><svg><use href="#g-stats"/></svg></span><b>System Stats</b></span>
+        <span class="fan-item"><span class="tile"><svg><use href="#g-tidy"/></svg></span><b>Tidy Folders</b></span>
+      </div>
+
+      <div class="hero-copy">
+        <h1 class="rise" style="--d:.08s">Every tool you keep downloading,<br /> <span class="grad">in one app.</span></h1>
+        <p class="sub rise" style="--d:.14s">Twenty-three native tools for images, PDFs, audio and video, all running on your Mac. Convert a HEIC, cut out a background, pull the text off a scan, then get on with your day.</p>
+        <div class="cta-row rise" style="--d:.2s">
+          <a class="btn primary" href="https://apps.apple.com/app/id6762058455" data-download><svg class="btn-ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3.5v11m0 0-4.2-4.2M12 14.5l4.2-4.2M5 19.5h14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>Download on the Mac App Store</a>
+          <a class="btn outline" href="#pricing">See what's free</a>
+        </div>
+        <p class="req-note rise" style="--d:.24s">macOS 15 or later · Apple silicon · 11 tools free forever, Pro $4.99 once</p>
       </div>
     </div>
-  </section>
+  </header>
+
+  <main>
+    <section id="find" class="sec reveal" aria-labelledby="find-title">
+      <div class="glow" aria-hidden="true"></div>
+      <div class="container">
+        <div class="lp lp-live rise" data-stage="tools-launcher">
+          <div class="lp-field">
+            <svg class="lp-glass" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M16 16l5 5"/></svg>
+            <input class="lp-input" type="text" role="combobox" aria-expanded="true" aria-controls="find-results" aria-autocomplete="list" aria-label="Try Knack's search: type a file type, a job or a tool name" placeholder="Search tools: heic, pdf, background…" autocomplete="off" autocapitalize="off" spellcheck="false" />
+            <span class="lp-chip" aria-hidden="true">⌘F</span>
+          </div>
+          <div class="lp-results">
+            <span class="lp-sel" aria-hidden="true"></span>
+            <ul id="find-results" class="lp-list" role="listbox" aria-label="Tools"></ul>
+            <p class="lp-empty">Start typing. Every tool answers at once.</p>
+          </div>
+          <div class="lp-foot">
+            <span class="lp-label" aria-live="polite">Knack</span>
+            <span class="lp-hint"><span class="lp-verb">Open</span><b>↩</b></span>
+            <span class="lp-hint">Move<b>↑↓</b></span>
+          </div>
+        </div>
+        <div class="sec-head center">
+          <h2 id="find-title" class="rise" style="--d:.08s">Find any tool by typing</h2>
+          <p class="rise" style="--d:.14s">Knack's home screen has one search field, and it knows every tool. Type a file type, a job or a name, and the right tool is first.</p>
+          <div class="chips rise" style="--d:.2s">
+            <button type="button" class="chip-q" data-q="heic">heic</button>
+            <button type="button" class="chip-q" data-q="pdf">pdf</button>
+            <button type="button" class="chip-q" data-q="background">background</button>
+            <button type="button" class="chip-q" data-q="1280*0.15">1280*0.15</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="convert" class="sec sec-split reveal" data-stage="convert" aria-labelledby="convert-title">
+      <div class="glow" aria-hidden="true"></div>
+      <div class="container split">
+        <div class="split-copy">
+          <h2 id="convert-title" class="rise">Drop a file, get the format you need</h2>
+          <p class="rise" style="--d:.06s">Image Converter reads PNG, JPEG, HEIC, WebP, TIFF, GIF, BMP and PDF, resizes on the way and works through a whole batch. It asks once before saving next to your originals, then remembers.</p>
+          <p class="aside rise" style="--d:.1s"><span class="tier tier-free">Free forever</span> Pick a format, then drag the photo onto Knack. Or press it.</p>
+        </div>
+        <div class="split-stage">
+          <div class="cv-fit rise" style="--d:.08s">
+            <div class="cv-stage">
+              <div class="cv-src" aria-hidden="true"><div class="win-top"><i></i><i></i><i></i><b>Downloads</b></div></div>
+              <div class="cv-zone" aria-hidden="true">
+                <div class="cv-head"><img src="screenshots/icon.png" alt="" width="20" height="20" loading="lazy" /><b>Knack</b><span>Image Converter</span></div>
+                <div class="cv-drop"><span class="cv-hint">Drop images here</span></div>
+                <div class="cv-prog"><i></i></div>
+                <div class="cv-foot">Save as <b class="cv-fmt">JPG</b> · next to the original</div>
+              </div>
+              <span class="cv-slot" aria-hidden="true"></span>
+              <span class="cv-other" aria-hidden="true"><span class="fi fi-pdf"><i></i><i></i><i></i><em>PDF</em></span><span class="fd-n">Notes.pdf</span></span>
+              <span class="cv-other" aria-hidden="true"><span class="fi fi-zip"></span><span class="fd-n">fonts.zip</span></span>
+              <button type="button" class="cv-file" aria-label="IMG_2041.HEIC, 3.1 MB. Drag it onto Knack, or press to convert it.">
+                <span class="cv-thumb"><span class="cv-ext">HEIC</span></span>
+                <span class="cv-name">IMG_2041.HEIC</span>
+                <span class="cv-meta"><span class="cv-size">3.1 MB</span><span class="cv-delta"></span></span>
+              </button>
+              <svg class="cursor" viewBox="0 0 15 22" aria-hidden="true"><path d="M0 0v17.2l4.5-4 3 8.8 2.7-1-3-8.4h7.8z" fill="#000" stroke="#fff" stroke-width="1.4" stroke-linejoin="round"/></svg>
+            </div>
+          </div>
+          <div class="cv-controls rise" style="--d:.14s">
+            <div class="seg" role="radiogroup" aria-label="Output format">
+              <button type="button" class="seg-b" role="radio" aria-checked="true" data-fmt="jpg">JPG</button>
+              <button type="button" class="seg-b" role="radio" aria-checked="false" data-fmt="png">PNG</button>
+              <button type="button" class="seg-b" role="radio" aria-checked="false" data-fmt="webp">WebP</button>
+            </div>
+            <button type="button" class="ghost-btn cv-reset">Reset</button>
+          </div>
+          <p class="stage-status cv-status" aria-live="polite">Drag the photo onto Knack.</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="cutout" class="sec sec-split reveal" data-stage="cutout" aria-labelledby="cutout-title">
+      <div class="glow" aria-hidden="true"></div>
+      <div class="container split reverse">
+        <div class="split-copy">
+          <h2 id="cutout-title" class="rise">Lift the subject off any background</h2>
+          <p class="rise" style="--d:.06s">AI Background Remover finds the subject and hands back a transparent PNG, or puts it on a colour of your choice. Drop in one photo or a whole folder.</p>
+          <p class="aside rise" style="--d:.1s"><span class="tier tier-paid">Pro</span> Drag the handle, or focus it and use the arrow keys.</p>
+        </div>
+        <div class="split-stage">
+          <div class="co rise" style="--d:.08s;--p:50">
+            <svg class="co-art co-after" viewBox="0 0 560 400" aria-hidden="true" preserveAspectRatio="xMidYMid slice">
+              <defs>
+                <pattern id="co-check" width="20" height="20" patternUnits="userSpaceOnUse"><rect width="20" height="20" fill="#2a2830"/><rect width="10" height="10" fill="#3a3842"/><rect x="10" y="10" width="10" height="10" fill="#3a3842"/></pattern>
+                <linearGradient id="co-cer" x1="0" x2="1"><stop offset="0" stop-color="#d9d2c8"/><stop offset=".28" stop-color="#fbf8f3"/><stop offset=".55" stop-color="#f1ece4"/><stop offset="1" stop-color="#b9b0a4"/></linearGradient>
+                <linearGradient id="co-band" x1="0" x2="1"><stop offset="0" stop-color="#c22a63"/><stop offset=".3" stop-color="#ff4f93"/><stop offset=".6" stop-color="#e83a7c"/><stop offset="1" stop-color="#8f1d4b"/></linearGradient>
+                <radialGradient id="co-coffee" cx=".45" cy=".4" r=".7"><stop offset="0" stop-color="#7a4a2c"/><stop offset=".7" stop-color="#4a2a17"/><stop offset="1" stop-color="#2c170b"/></radialGradient>
+                <linearGradient id="co-rim" x1="0" x2="1"><stop offset="0" stop-color="#cfc7bc"/><stop offset=".4" stop-color="#fffdf9"/><stop offset="1" stop-color="#c4bbaf"/></linearGradient>
+              </defs>
+              <rect width="560" height="400" fill="url(#co-check)"/>
+              <g id="co-mug">
+                <path d="M338 210c34 0 50 18 50 44s-16 46-50 50" fill="none" stroke="#c9c1b6" stroke-width="20" stroke-linecap="round"/>
+                <path d="M338 210c34 0 50 18 50 44s-16 46-50 50" fill="none" stroke="#f6f2ec" stroke-width="11" stroke-linecap="round" opacity=".75"/>
+                <path d="M190 160h160v150c0 26-22 44-48 44h-64c-26 0-48-18-48-44z" fill="url(#co-cer)"/>
+                <path d="M190 236h160v34H190z" fill="url(#co-band)"/>
+                <path d="M190 236h160" stroke="#fff" stroke-opacity=".35" stroke-width="1.5"/>
+                <ellipse cx="270" cy="160" rx="80" ry="17" fill="url(#co-rim)"/>
+                <ellipse cx="270" cy="162" rx="70" ry="12" fill="url(#co-coffee)"/>
+                <ellipse cx="252" cy="159" rx="22" ry="3.5" fill="#c99a72" opacity=".55"/>
+                <path d="M206 176v120c0 14 8 26 22 32" fill="none" stroke="#fff" stroke-opacity=".55" stroke-width="7" stroke-linecap="round"/>
+              </g>
+            </svg>
+            <div class="co-before">
+              <svg class="co-art" viewBox="0 0 560 400" aria-hidden="true" preserveAspectRatio="xMidYMid slice">
+                <defs>
+                  <pattern id="co-tile" width="56" height="56" patternUnits="userSpaceOnUse">
+                    <rect width="56" height="56" fill="#244b52"/>
+                    <path d="M0 28 28 0l28 28-28 28z" fill="#2e6a6f"/>
+                    <circle cx="28" cy="28" r="9" fill="#e9b872"/>
+                    <circle cx="28" cy="28" r="4" fill="#d1495b"/>
+                    <circle cx="0" cy="0" r="7" fill="#f1e3c8"/><circle cx="56" cy="0" r="7" fill="#f1e3c8"/><circle cx="0" cy="56" r="7" fill="#f1e3c8"/><circle cx="56" cy="56" r="7" fill="#f1e3c8"/>
+                  </pattern>
+                  <linearGradient id="co-wood" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#a0663b"/><stop offset="1" stop-color="#5e3418"/></linearGradient>
+                  <radialGradient id="co-sun" cx=".78" cy=".18" r=".7"><stop offset="0" stop-color="#ffe7b0" stop-opacity=".55"/><stop offset="1" stop-color="#ffe7b0" stop-opacity="0"/></radialGradient>
+                  <radialGradient id="co-shadow" cx=".5" cy=".5" r=".5"><stop offset="0" stop-color="#000" stop-opacity=".55"/><stop offset="1" stop-color="#000" stop-opacity="0"/></radialGradient>
+                </defs>
+                <rect width="560" height="400" fill="url(#co-tile)"/>
+                <rect width="560" height="400" fill="url(#co-sun)"/>
+                <g fill="#3f8f4e">
+                  <path d="M60 330c-10-70 6-140 46-190-8 62-14 128-22 190z"/>
+                  <path d="M76 330c20-60 60-110 116-136-36 44-66 92-88 136z" fill="#56a862"/>
+                  <path d="M58 330c-36-46-48-100-36-160 18 52 34 104 50 160z" fill="#2f7440"/>
+                  <path d="M88 330c6-40 30-76 70-96-22 30-38 62-50 96z" fill="#6cbf6f"/>
+                </g>
+                <path d="M470 120h70v90h-70z" fill="#f1e3c8" opacity=".9"/>
+                <path d="M478 128h54v58h-54z" fill="#d1495b"/>
+                <path d="M478 172l16-18 14 12 10-8 14 14v14h-54z" fill="#e9b872"/>
+                <rect y="318" width="560" height="82" fill="url(#co-wood)"/>
+                <path d="M0 318h560" stroke="#c48552" stroke-width="3"/>
+                <path d="M0 342c120 6 220-4 330 2s170 4 230 0M0 372c90-4 200 6 300 2s190-6 260 0" stroke="#4a2810" stroke-opacity=".5" stroke-width="2" fill="none"/>
+                <ellipse cx="282" cy="352" rx="120" ry="14" fill="url(#co-shadow)"/>
+                <use href="#co-mug"/>
+              </svg>
+            </div>
+            <div class="co-line" aria-hidden="true"></div>
+            <button type="button" class="co-handle" role="slider" aria-label="Before and after. Left shows the original photo, right shows the cutout." aria-valuemin="0" aria-valuemax="100" aria-valuenow="50" aria-valuetext="50% original"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 7-5 5 5 5M15 7l5 5-5 5"/></svg></button>
+            <span class="co-tag co-tag-l" aria-hidden="true">Original</span>
+            <span class="co-tag co-tag-r" aria-hidden="true">mug-cutout.png</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="finder" class="sec sec-split reveal" data-stage="finder" aria-labelledby="finder-title">
+      <div class="glow" aria-hidden="true"></div>
+      <div class="container split">
+        <div class="split-copy">
+          <h2 id="finder-title" class="rise">Right-click, and it's done</h2>
+          <p class="rise" style="--d:.06s">Switch on Knack's Finder actions once in Settings. Then right-click any image, open Services, and remove a background, compress, convert or extract the text without opening a window.</p>
+          <p class="aside rise" style="--d:.1s">Open in Knack… shows every tool that fits what you picked. Click a file here to try it.</p>
+        </div>
+        <div class="split-stage">
+          <div class="fd rise" style="--d:.08s">
+            <div class="fd-top"><i></i><i></i><i></i><span class="fd-nav" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m14 7-5 5 5 5"/></svg><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m10 7 5 5-5 5"/></svg></span><b>Downloads</b></div>
+            <div class="fd-body">
+              <ul class="fd-side" aria-hidden="true">
+                <li class="fd-h">Favourites</li>
+                <li>AirDrop</li>
+                <li>Recents</li>
+                <li>Applications</li>
+                <li>Desktop</li>
+                <li class="on">Downloads</li>
+              </ul>
+              <ul class="fd-grid" aria-label="Files in Downloads">
+                <li><button type="button" class="fd-file" data-name="photo.jpg" data-kind="photo" aria-haspopup="menu"><span class="fi fi-photo"></span><span class="fd-n">photo.jpg</span></button></li>
+                <li><button type="button" class="fd-file" data-name="IMG_0412.heic" data-kind="beach" aria-haspopup="menu"><span class="fi fi-beach"></span><span class="fd-n">IMG_0412.heic</span></button></li>
+                <li><button type="button" class="fd-file" data-name="receipt.png" data-kind="receipt" aria-haspopup="menu"><span class="fi fi-receipt"><i></i><i></i><i></i><i></i></span><span class="fd-n">receipt.png</span></button></li>
+                <li><button type="button" class="fd-file" data-name="poster.png" data-kind="poster" aria-haspopup="menu"><span class="fi fi-poster"></span><span class="fd-n">poster.png</span></button></li>
+                <li><button type="button" class="fd-file" data-name="Notes.pdf" data-kind="pdf" aria-haspopup="menu"><span class="fi fi-pdf"><i></i><i></i><i></i><em>PDF</em></span><span class="fd-n">Notes.pdf</span></button></li>
+              </ul>
+            </div>
+            <div class="cm" role="menu" aria-label="File menu" hidden>
+              <div class="cm-i" role="menuitem" aria-disabled="true">Open</div>
+              <div class="cm-i cm-more" role="menuitem" aria-disabled="true">Open With</div>
+              <div class="cm-sep" role="separator"></div>
+              <div class="cm-i" role="menuitem" aria-disabled="true">Move to Bin</div>
+              <div class="cm-sep" role="separator"></div>
+              <div class="cm-i" role="menuitem" aria-disabled="true">Get Info</div>
+              <div class="cm-i" role="menuitem" aria-disabled="true">Rename</div>
+              <div class="cm-i" role="menuitem" aria-disabled="true">Copy</div>
+              <div class="cm-sep" role="separator"></div>
+              <div class="cm-i cm-more" role="menuitem" aria-disabled="true">Quick Actions</div>
+              <button type="button" class="cm-i cm-more cm-services" role="menuitem" aria-haspopup="menu" aria-expanded="false">Services</button>
+            </div>
+            <div class="cm cm-sub" role="menu" aria-label="Services" hidden>
+              <button type="button" class="cm-i" role="menuitem" data-act="cutout">Remove Background in Knack</button>
+              <button type="button" class="cm-i" role="menuitem" data-act="compress">Compress Image in Knack</button>
+              <button type="button" class="cm-i" role="menuitem" data-act="text">Extract Text in Knack</button>
+              <button type="button" class="cm-i" role="menuitem" data-act="convert">Convert Image in Knack</button>
+              <div class="cm-sep" role="separator"></div>
+              <button type="button" class="cm-i" role="menuitem" data-act="open">Open in Knack…</button>
+            </div>
+            <div class="fd-pick" role="dialog" aria-label="Open in Knack" hidden>
+              <p class="fd-pick-h"><img src="screenshots/icon.png" alt="" width="18" height="18" loading="lazy" />Open <span class="fd-pick-file"></span> in</p>
+              <ul class="fd-pick-list"></ul>
+            </div>
+            <svg class="cursor" viewBox="0 0 15 22" aria-hidden="true"><path d="M0 0v17.2l4.5-4 3 8.8 2.7-1-3-8.4h7.8z" fill="#000" stroke="#fff" stroke-width="1.4" stroke-linejoin="round"/></svg>
+          </div>
+          <p class="stage-status fd-status" aria-live="polite">Click a file to open its menu.</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="stats" class="sec sec-split reveal" data-stage="stats" aria-labelledby="stats-title">
+      <div class="glow" aria-hidden="true"></div>
+      <div class="container split reverse">
+        <div class="split-copy">
+          <h2 id="stats-title" class="rise">Your Mac's vitals, next to the clock</h2>
+          <p class="rise" style="--d:.06s">System Stats keeps live CPU, memory and network numbers in the menu bar. Click them for disk space, battery and the processes using the most CPU right now.</p>
+          <p class="aside rise" style="--d:.1s"><span class="tier tier-paid">Pro</span> Pick which numbers show in the menu bar in Settings.</p>
+        </div>
+        <div class="split-stage">
+          <div class="mb rise" style="--d:.08s">
+            <div class="mb-bar">
+              <span class="mb-apple" aria-hidden="true"></span>
+              <b class="mb-app" aria-hidden="true">Finder</b>
+              <span class="mb-menus" aria-hidden="true"><i>File</i><i>Edit</i><i>View</i><i>Go</i></span>
+              <span class="mb-sp"></span>
+              <span class="mb-item" aria-label="Menu bar readout"><span>CPU <b class="v-cpu">23%</b></span><span class="mb-dot" aria-hidden="true">·</span><span>MEM <b class="v-mem">61%</b></span><span class="mb-dot mb-net-d" aria-hidden="true">·</span><span class="mb-net">↓ <b class="v-down">2.4 MB/s</b></span></span>
+              <span class="mb-sys" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4.5 9.5a11 11 0 0 1 15 0M7.5 12.8a6.6 6.6 0 0 1 9 0M10.6 16a2.2 2.2 0 0 1 2.8 0"/></svg><svg viewBox="0 0 30 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="2" y="7" width="22" height="10" rx="3"/><rect x="4.5" y="9.5" width="15" height="5" rx="1.2" fill="currentColor" stroke="none"/><path d="M26.5 10.5v3" stroke-linecap="round"/></svg><span>Fri 9:41</span></span>
+            </div>
+            <div class="mb-pop" role="group" aria-label="System Stats popover">
+              <div class="mb-head"><span class="mb-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><use href="#g-stats"/></svg></span><b>System Stats</b><span class="mb-live"><i></i>Live</span></div>
+              <div class="mb-cpu">
+                <div class="mb-cpu-t"><span>CPU</span><b class="v-cpu">23%</b></div>
+                <svg class="spark" viewBox="0 0 240 56" preserveAspectRatio="none" aria-hidden="true">
+                  <defs><linearGradient id="spark-fill" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="var(--pal-accent)" stop-opacity=".38"/><stop offset="1" stop-color="var(--pal-accent)" stop-opacity="0"/></linearGradient></defs>
+                  <polygon class="spark-area" fill="url(#spark-fill)" points="0,56 240,56"/>
+                  <polyline class="spark-line" fill="none" stroke="var(--pal-accent)" stroke-width="2" stroke-linejoin="round" stroke-linecap="round" vector-effect="non-scaling-stroke" points="0,56 240,56"/>
+                </svg>
+              </div>
+              <div class="mb-grid">
+                <div class="mb-cell"><span>Memory</span><b class="v-mem">61%</b><i class="mb-meter"><u class="m-mem" style="width:61%"></u></i><small class="v-memgb">9.8 of 16 GB</small></div>
+                <div class="mb-cell"><span>Network</span><b><span class="v-down">2.4 MB/s</span></b><small>↑ <span class="v-up">180 KB/s</span></small></div>
+                <div class="mb-cell"><span>Disk</span><b>412 GB free</b><i class="mb-meter"><u style="width:59%"></u></i><small>of 1 TB</small></div>
+                <div class="mb-cell"><span>Battery</span><b>84%</b><i class="mb-meter ok"><u style="width:84%"></u></i><small>On battery</small></div>
+              </div>
+              <p class="mb-sub">Top processes</p>
+              <ul class="mb-procs" aria-label="Top processes by CPU"></ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="tidy" class="sec reveal" data-stage="tidy" aria-labelledby="tidy-title">
+      <div class="glow" aria-hidden="true"></div>
+      <div class="container">
+        <div class="td rise">
+          <div class="td-bar" aria-hidden="true"><i></i><i></i><i></i><b>Downloads</b><span class="td-count">12 items</span></div>
+          <div class="td-desk" aria-label="A Downloads folder with 12 files" role="img"></div>
+        </div>
+        <div class="sec-head center">
+          <h2 id="tidy-title" class="rise" style="--d:.08s">A tidy Downloads folder in one click</h2>
+          <p class="rise" style="--d:.14s">Tidy Folders sorts a folder by type, date or size. You see the plan before anything moves, and one click puts every file back.</p>
+          <div class="td-actions rise" style="--d:.2s">
+            <button type="button" class="btn primary td-go">Tidy by type</button>
+            <button type="button" class="btn outline td-undo" disabled>Undo</button>
+          </div>
+          <p class="stage-status td-status" aria-live="polite"><span class="tier tier-paid">Pro</span> 12 files, no folders yet.</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="tools" class="sec reveal" aria-labelledby="tools-title">
+      <div class="container">
+        <div class="sec-head tools-head">
+          <div>
+            <h2 id="tools-title" class="rise">Twenty-three tools, one app</h2>
+            <p class="rise" style="--d:.06s">Eleven are free forever. Knack Pro adds twelve more. Every one runs on your Mac.</p>
+          </div>
+          <div class="seg tools-filter rise" style="--d:.1s" role="radiogroup" aria-label="Show tools">
+            <button type="button" class="seg-b" role="radio" aria-checked="true" data-show="all">All <span>23</span></button>
+            <button type="button" class="seg-b" role="radio" aria-checked="false" data-show="free">Free <span>11</span></button>
+            <button type="button" class="seg-b" role="radio" aria-checked="false" data-show="pro">Pro <span>12</span></button>
+          </div>
+        </div>
+        <ul class="feature-grid tool-grid">
+          <li class="feature-card rise" data-tier="free" style="--d:.04s"><span class="tile"><svg><use href="#g-convert"/></svg></span><div><h3>Image Converter <span class="tier tier-free">Free forever</span></h3><p>PNG, JPEG, HEIC, WebP, TIFF, GIF, BMP and PDF, in batches, resized on the way.</p></div></li>
+          <li class="feature-card rise" data-tier="free" style="--d:.07s"><span class="tile"><svg><use href="#g-compress"/></svg></span><div><h3>Image Compressor <span class="tier tier-free">Free forever</span></h3><p>Shrinks PNGs and JPEGs, lossless or with smart compression.</p></div></li>
+          <li class="feature-card rise" data-tier="free" style="--d:.1s"><span class="tile"><svg><use href="#g-upscale"/></svg></span><div><h3>Image Upscaler <span class="tier tier-free">Free forever</span></h3><p>Enlarges photos 2× or 4× with a neural model.</p></div></li>
+          <li class="feature-card rise" data-tier="free" style="--d:.13s"><span class="tile"><svg><use href="#g-enhance"/></svg></span><div><h3>Photo Enhance <span class="tier tier-free">Free forever</span></h3><p>Denoises and sharpens a photo in one pass.</p></div></li>
+          <li class="feature-card rise" data-tier="free" style="--d:.16s"><span class="tile"><svg><use href="#g-face"/></svg></span><div><h3>Face Restoration <span class="tier tier-free">Free forever</span></h3><p>Brings back detail in old or blurry portraits.</p></div></li>
+          <li class="feature-card rise" data-tier="free" style="--d:.19s"><span class="tile"><svg><use href="#g-palette"/></svg></span><div><h3>Color Palette <span class="tier tier-free">Free forever</span></h3><p>Pulls the dominant colours out of any image.</p></div></li>
+          <li class="feature-card rise" data-tier="free" style="--d:.22s"><span class="tile"><svg><use href="#g-picker"/></svg></span><div><h3>Color Picker <span class="tier tier-free">Free forever</span></h3><p>An eyedropper for any pixel on your screen.</p></div></li>
+          <li class="feature-card rise" data-tier="free" style="--d:.25s"><span class="tile"><svg><use href="#g-qr"/></svg></span><div><h3>QR Code Generator <span class="tier tier-free">Free forever</span></h3><p>QR codes for links, Wi-Fi and plain text.</p></div></li>
+          <li class="feature-card rise" data-tier="free" style="--d:.28s"><span class="tile"><svg><use href="#g-video"/></svg></span><div><h3>Video Converter <span class="tier tier-free">Free forever</span></h3><p>MP4 (H.264), HEVC, MOV, or just the audio.</p></div></li>
+          <li class="feature-card rise" data-tier="free" style="--d:.31s"><span class="tile"><svg><use href="#g-audio"/></svg></span><div><h3>Audio Converter <span class="tier tier-free">Free forever</span></h3><p>M4A, WAV, AIFF or CAF, and pulls the soundtrack out of a video.</p></div></li>
+          <li class="feature-card rise" data-tier="free" style="--d:.34s"><span class="tile"><svg><use href="#g-lock"/></svg></span><div><h3>Cleaning Lock <span class="tier tier-free">Free forever</span></h3><p>Locks the keyboard and trackpad while you wipe them down.</p></div></li>
+          <li class="feature-card rise" data-tier="pro" style="--d:.37s"><span class="tile"><svg><use href="#g-cutout"/></svg></span><div><h3>AI Background Remover <span class="tier tier-paid">Pro</span></h3><p>Transparent PNG or a colour background, one photo or a batch.</p></div></li>
+          <li class="feature-card rise" data-tier="pro" style="--d:.4s"><span class="tile"><svg><use href="#g-crop"/></svg></span><div><h3>Smart Crop <span class="tier tier-paid">Pro</span></h3><p>Crops to social ratios around what matters in the frame.</p></div></li>
+          <li class="feature-card rise" data-tier="pro" style="--d:.43s"><span class="tile"><svg><use href="#g-scan"/></svg></span><div><h3>Document Scanner <span class="tier tier-paid">Pro</span></h3><p>Auto-crops, deskews and removes shadows, then merges pages into one PDF.</p></div></li>
+          <li class="feature-card rise" data-tier="pro" style="--d:.46s"><span class="tile"><svg><use href="#g-depth"/></svg></span><div><h3>Portrait Depth <span class="tier tier-paid">Pro</span></h3><p>Blurs and relights the background of a portrait.</p></div></li>
+          <li class="feature-card rise" data-tier="pro" style="--d:.49s"><span class="tile"><svg><use href="#g-colorize"/></svg></span><div><h3>Colorize B&amp;W <span class="tier tier-paid">Pro</span></h3><p>Adds colour to black and white photos.</p></div></li>
+          <li class="feature-card rise" data-tier="pro" style="--d:.52s"><span class="tile"><svg><use href="#g-transcribe"/></svg></span><div><h3>Transcribe <span class="tier tier-paid">Pro</span></h3><p>Whisper on your Mac turns audio into text, SRT or VTT.</p></div></li>
+          <li class="feature-card rise" data-tier="pro" style="--d:.55s"><span class="tile"><svg><use href="#g-shots"/></svg></span><div><h3>App Store Screenshots <span class="tier tier-paid">Pro</span></h3><p>Designs store screenshots around your raw captures.</p></div></li>
+          <li class="feature-card rise" data-tier="pro" style="--d:.58s"><span class="tile"><svg><use href="#g-appicon"/></svg></span><div><h3>App Icon Generator <span class="tier tier-paid">Pro</span></h3><p>macOS, iOS, Android and web icon sets from one image.</p></div></li>
+          <li class="feature-card rise" data-tier="pro" style="--d:.61s"><span class="tile"><svg><use href="#g-pdf"/></svg></span><div><h3>PDF Toolkit <span class="tier tier-paid">Pro</span></h3><p>Merges, splits, extracts pages from and compresses PDFs.</p></div></li>
+          <li class="feature-card rise" data-tier="pro" style="--d:.64s"><span class="tile"><svg><use href="#g-ocr"/></svg></span><div><h3>Text Extractor <span class="tier tier-paid">Pro</span></h3><p>Copies the text out of images and PDFs.</p></div></li>
+          <li class="feature-card rise" data-tier="pro" style="--d:.67s"><span class="tile"><svg><use href="#g-tidy"/></svg></span><div><h3>Tidy Folders <span class="tier tier-paid">Pro</span></h3><p>Sorts a folder by type, date or size, with a preview and one-click undo.</p></div></li>
+          <li class="feature-card rise" data-tier="pro" style="--d:.7s"><span class="tile"><svg><use href="#g-stats"/></svg></span><div><h3>System Stats <span class="tier tier-paid">Pro</span></h3><p>Live CPU, memory, network, disk and battery in the menu bar.</p></div></li>
+        </ul>
+        <ul class="trust">
+          <li class="rise" style="--d:.06s"><b>Native SwiftUI</b><span>No Electron, no web views. Built for Apple silicon, so it opens fast and feels like macOS.</span></li>
+          <li class="rise" style="--d:.1s"><b>Stays on your Mac</b><span>Your files are processed on your Mac and never uploaded. Knack sends anonymous usage counts and crash reports, and one switch in Settings turns them off. <a href="privacy.html">Privacy policy</a></span></li>
+          <li class="rise" style="--d:.14s"><b>Sandboxed by Apple</b><span>Sold on the Mac App Store, reviewed by Apple and sandboxed. It asks once before saving next to your originals.</span></li>
+        </ul>
+      </div>
+    </section>
+
+    <section id="pricing" class="sec sec-price reveal" data-live aria-labelledby="price-title">
+      <div class="glow" aria-hidden="true"></div>
+      <div class="container">
+        <div class="price-stage rise">
+          <div class="price-card">
+            <div class="price-main">
+              <span class="price-lbl">Knack Pro</span>
+              <span class="price-num">$4.99</span>
+              <span class="price-once">once, not a subscription</span>
+            </div>
+            <span class="price-rule" aria-hidden="true"></span>
+            <ul class="price-list">
+              <li>12 Pro tools: background remover, PDF, OCR, transcription and more</li>
+              <li>Follows your Apple ID to every Mac</li>
+              <li>Every future Pro tool included</li>
+            </ul>
+            <span class="shimmer" aria-hidden="true"></span>
+          </div>
+        </div>
+        <div class="sec-head center">
+          <h2 id="price-title" class="rise" style="--d:.08s">11 tools free forever</h2>
+          <p class="rise" style="--d:.14s">Knack is a free download. Pro is one in-app purchase when you want the rest, and these stay free forever:</p>
+          <ul class="free-chips rise" style="--d:.2s">
+            <li><svg><use href="#g-convert"/></svg>Image Converter</li>
+            <li><svg><use href="#g-compress"/></svg>Image Compressor</li>
+            <li><svg><use href="#g-upscale"/></svg>Image Upscaler</li>
+            <li><svg><use href="#g-enhance"/></svg>Photo Enhance</li>
+            <li><svg><use href="#g-face"/></svg>Face Restoration</li>
+            <li><svg><use href="#g-palette"/></svg>Color Palette</li>
+            <li><svg><use href="#g-picker"/></svg>Color Picker</li>
+            <li><svg><use href="#g-qr"/></svg>QR Code Generator</li>
+            <li><svg><use href="#g-video"/></svg>Video Converter</li>
+            <li><svg><use href="#g-audio"/></svg>Audio Converter</li>
+            <li><svg><use href="#g-lock"/></svg>Cleaning Lock</li>
+          </ul>
+          <div class="cta-row center rise" style="--d:.24s">
+            <a class="btn primary" href="https://apps.apple.com/app/id6762058455" data-download>Download on the Mac App Store</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <div class="container">
+      <section id="download" class="cta-band">
+        <img class="cta-icon" src="screenshots/icon.png" alt="" width="64" height="64" loading="lazy" />
+        <div class="cta-copy">
+          <h2>Make it the last one.</h2>
+          <p class="lede">11 tools free forever. Knack Pro adds 12 more for $4.99 once, on every Mac you sign in to.</p>
+          <div class="cta-row">
+            <a class="btn primary" href="https://apps.apple.com/app/id6762058455" data-download>Download on the Mac App Store</a>
+          </div>
+          <p class="req-note">macOS 15 or later · Apple silicon · Sold and updated through the Mac App Store</p>
+        </div>
+      </section>
+    </div>
+  </main>
 
   <div class="container">
-    <section id="showcase" class="showcase-intro">
-      <div class="section-label">See it in action</div>
-      <h2>Every pixel, rendered on your Mac.</h2>
-      <p class="lede">Native SwiftUI. Retina-sharp. Here's a closer look at the tools people use most.</p>
-    </section>
-
-    <section class="showcase">
-      <div class="showcase-row">
-        <div class="showcase-copy">
-          <div class="chip chip-amber">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="14" rx="2"/><path d="M3 8h18"/><path d="M7 13h10M7 16h6"/></svg>
-            App Store Screenshot Designer <span class="pro-pill">Pro</span>
-          </div>
-          <h3>Ship App Store art<br />in minutes, not days.</h3>
-          <p>Six curated marketing templates — Hero, Split, Showcase, Headline Only, Stat Card, Full Bleed. Drop in raw captures, pick a device (Mac / iPhone 6.9″ / iPad 13″), choose a glass or flat frame treatment, and export perfectly-sized PNGs ready for App Store Connect. Localize every screen with Apple's on-device Translation framework — one click translates every slot into 23 languages and exports a ready-to-upload `en-US/`, `de-DE/` folder tree. Save your work as a `.knack` project and pick up where you left off next month.</p>
-          <ul class="pills">
-            <li>6 templates</li><li>3 devices</li><li>20 backgrounds</li><li>23 languages</li><li>Fullscreen preview</li><li>.knack project files</li>
-          </ul>
-        </div>
-        <figure class="window">
-          <img src="screenshots/home-page.png" alt="App Store Screenshot Designer composing marketing artwork" width="1779" height="1162" loading="lazy" decoding="async" />
-        </figure>
-      </div>
-
-      <div class="showcase-row reverse">
-        <div class="showcase-copy">
-          <div class="chip chip-brand">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 14a4 4 0 1 0 0-8 4 4 0 0 0 0 8z"/><path d="M5 21c.7-3.5 3.6-6 7-6s6.3 2.5 7 6"/></svg>
-            AI Background Remover <span class="pro-pill">Pro</span>
-          </div>
-          <h3>Truly on-device AI,<br />truly instant.</h3>
-          <p>Powered by Apple's Vision framework — the same model built into macOS. Cut out subjects in milliseconds, no cloud round-trip, no API key, no queue.</p>
-          <ul class="pills">
-            <li>Apple Vision</li><li>No network</li><li>Transparent PNG</li><li>Batch mode</li>
-          </ul>
-        </div>
-        <figure class="window">
-          <img src="screenshots/ai-background-remover.png" alt="AI Background Remover with on-device subject detection" width="1779" height="1162" loading="lazy" decoding="async" />
-        </figure>
-      </div>
-
-      <div class="showcase-row">
-        <div class="showcase-copy">
-          <div class="chip chip-rainbow">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 14v-3a3 3 0 0 1 3-3h0a3 3 0 0 1 3 3v7"/><path d="M13 17h4a4 4 0 0 0 4-4v-2a9 9 0 1 0-3 6.7"/><circle cx="10" cy="11" r="1" fill="currentColor"/></svg>
-            Color Picker &amp; Menu Bar
-          </div>
-          <h3>Pick colors and text<br />from anywhere on screen.</h3>
-          <p>Pixel-accurate color sampler inside the app, plus a branded menu bar companion that lets you grab a color (⇧⌘P) or extract text from any region of any app (⇧⌘T) — without leaving what you're doing. Auto-copies to the clipboard in the format you want (HEX, RGB, HSL, SwiftUI, AppKit). Rolling history of 40 picks, synced between the sidebar and the menu bar's recent-colors list. A floating confirmation HUD tells you what landed in the clipboard.</p>
-          <ul class="pills">
-            <li>Pixel-accurate</li><li>Screen sampler</li><li>Area OCR</li><li>5 formats</li><li>Menu bar HUD</li>
-          </ul>
-        </div>
-        <figure class="window">
-          <img src="screenshots/text-extractor.png" alt="Color Picker sampling pixel colors with live hover preview" width="1779" height="1162" loading="lazy" decoding="async" />
-        </figure>
-      </div>
-
-      <div class="showcase-row reverse">
-        <div class="showcase-copy">
-          <div class="chip chip-violet">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="3" width="20" height="4" rx="1"/><path d="M7 7v4M12 7v4M17 7v4"/><rect x="6" y="13" width="12" height="8" rx="2"/></svg>
-            Menu-bar first mode
-          </div>
-          <h3>Hide the Dock icon.<br />Live in the menu bar.</h3>
-          <p>Flip a single switch in Settings and Knack drops out of the Dock and Cmd+Tab. The menu bar companion stays — click the Knack mark any time to open the main window. Close the window and Knack keeps running in the menu bar, ready for the next color pick or screen OCR. Flip the switch back off and the Dock icon returns instantly. Perfect for a clean workspace without losing the tools.</p>
-          <ul class="pills">
-            <li>Dock-free</li><li>Stays in menu bar</li><li>One-click toggle</li><li>Reversible</li>
-          </ul>
-        </div>
-        <figure class="window">
-          <img src="screenshots/home-page.png" alt="Knack running as a menu-bar-only app with the Dock icon hidden" width="1779" height="1162" loading="lazy" decoding="async" />
-        </figure>
-      </div>
-
-      <div class="showcase-row reverse">
-        <div class="showcase-copy">
-          <div class="chip chip-cyan">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="3"/><circle cx="9" cy="9" r="1.6"/><path d="M3 17l5-5 4 4 3-3 6 6"/></svg>
-            Image Converter
-          </div>
-          <h3>Batch convert anything<br />to anything.</h3>
-          <p>Drop in hundreds of files and convert between PNG, JPEG, WebP, HEIC, TIFF, GIF, and BMP. Quality, resizing, and output folder — dialed in once, applied everywhere.</p>
-          <ul class="pills">
-            <li>PNG</li><li>JPEG</li><li>WebP</li><li>HEIC</li><li>TIFF</li><li>GIF</li><li>BMP</li>
-          </ul>
-        </div>
-        <figure class="window">
-          <img src="screenshots/image-converter.png" alt="Image Converter batch UI" width="1779" height="1162" loading="lazy" decoding="async" />
-        </figure>
-      </div>
-
-      <div class="showcase-row">
-        <div class="showcase-copy">
-          <div class="chip chip-teal">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="4" width="16" height="16" rx="4"/><rect x="8" y="8" width="8" height="8" rx="2"/></svg>
-            App Icon Generator <span class="pro-pill">Pro</span>
-          </div>
-          <h3>Every icon size,<br />from one source.</h3>
-          <p>Drop in a 1024×1024 master. Get the full icon set for macOS, iOS, Android, and the web — named correctly, bundled neatly, ready to ship. Apple squircle mask applied automatically where it should be, left flat where iOS renders its own.</p>
-          <ul class="pills">
-            <li>macOS</li><li>iOS</li><li>Android</li><li>Web favicons</li>
-          </ul>
-        </div>
-        <figure class="window">
-          <img src="screenshots/app-icon-gen.png" alt="App Icon Generator exporting all platform sizes" width="1779" height="1162" loading="lazy" decoding="async" />
-        </figure>
-      </div>
-    </section>
-
-    <hr class="sep" />
-
-    <section id="tools">
-      <div class="section-label">All 20 tools</div>
-      <h2>One window, everything.</h2>
-      <p class="lede">Ten free tools for everyone. Ten Pro tools powered by Apple's Vision, Core Image, Core ML, and the on-device Translation framework — all running on your Mac.</p>
-
-      <div class="grid">
-        <!-- Free tools -->
-        <div class="card">
-          <div class="tile c-cyan"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="3"/><circle cx="9" cy="9" r="1.6"/><path d="M3 17l5-5 4 4 3-3 6 6"/></svg></div>
-          <h3>Image Converter</h3>
-          <p>PNG, JPEG, WebP, HEIC, TIFF, GIF, BMP. Batch-friendly.</p>
-        </div>
-        <div class="card">
-          <div class="tile c-green"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 4h10M7 20h10M9 8h6M9 16h6"/><path d="M12 11v2"/><path d="M8 12h8"/></svg></div>
-          <h3>Image Compressor</h3>
-          <p>Lossless and smart-lossy via oxipng and pngquant.</p>
-        </div>
-        <div class="card">
-          <div class="tile c-orange"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3l1.8 4.5L18 9l-4.2 1.5L12 15l-1.8-4.5L6 9l4.2-1.5z"/><path d="M19 16l.9 2.1L22 19l-2.1.9L19 22l-.9-2.1L16 19l2.1-.9z"/></svg></div>
-          <h3>Photo Enhance</h3>
-          <p>Denoise &amp; sharpen via Core Image.</p>
-        </div>
-        <div class="card">
-          <div class="tile c-magenta"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M9 10h.01M15 10h.01"/><path d="M9 15c1.5 1 4.5 1 6 0"/></svg></div>
-          <h3>Face Restoration</h3>
-          <p>Detect faces and refine each one.</p>
-        </div>
-        <div class="card">
-          <div class="tile c-rainbow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3a9 9 0 0 0 0 18c1.1 0 2-.9 2-2 0-.5-.2-1-.6-1.4a1.95 1.95 0 0 1 1.4-3.3H17a4 4 0 0 0 4-4 8 8 0 0 0-9-7.3z"/><circle cx="7.5" cy="10.5" r="1.2" fill="currentColor"/><circle cx="11.5" cy="6.5" r="1.2" fill="currentColor"/><circle cx="16" cy="9" r="1.2" fill="currentColor"/></svg></div>
-          <h3>Color Palette</h3>
-          <p>Extract dominant colors. HEX, RGB, HSL.</p>
-        </div>
-        <div class="card">
-          <div class="tile c-pink"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M17 6a5 5 0 0 0-5 5v5"/><path d="M12 11l4-2 3 5-5 3z"/><circle cx="7" cy="17" r="3"/></svg></div>
-          <h3>Color Picker</h3>
-          <p>Pixel-accurate sampler. Menu bar companion.</p>
-        </div>
-        <div class="card">
-          <div class="tile c-amber"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 7V5a2 2 0 0 1 2-2h2M17 3h2a2 2 0 0 1 2 2v2M21 17v2a2 2 0 0 1-2 2h-2M7 21H5a2 2 0 0 1-2-2v-2"/><path d="M7 9h10M7 13h10M7 17h6"/></svg></div>
-          <h3>Text Extractor</h3>
-          <p>OCR via Apple Vision. Fully on-device.</p>
-        </div>
-        <div class="card">
-          <div class="tile c-indigo"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><path d="M14 14h3M21 14v3M14 17v4M17 17h4M17 21h4"/></svg></div>
-          <h3>QR Generator</h3>
-          <p>URLs, Wi-Fi, contact cards. Any size.</p>
-        </div>
-        <div class="card">
-          <div class="tile c-violet"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 9h4M3 15h4M17 9h4M17 15h4M7 5v14M17 5v14"/><path d="M11 9.5v5l4-2.5z" fill="currentColor" stroke="none"/></svg></div>
-          <h3>Video Converter</h3>
-          <p>MP4, MOV, MKV, WebM, GIF. H.264/H.265.</p>
-        </div>
-        <div class="card">
-          <div class="tile c-pink"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 12h2l2-7 4 14 3-10 2 6 2-3h3"/></svg></div>
-          <h3>Audio Converter</h3>
-          <p>MP3, WAV, AAC, FLAC, OGG. Tags preserved.</p>
-        </div>
-
-        <!-- Pro tools -->
-        <div class="card pro">
-          <div class="tile c-teal"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="4" width="16" height="16" rx="4"/><rect x="8" y="8" width="8" height="8" rx="2"/></svg></div>
-          <h3>App Icon Generator <span class="pro-pill">Pro</span></h3>
-          <p>Full sets for macOS, iOS, Android, web.</p>
-        </div>
-        <div class="card pro">
-          <div class="tile c-red"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5"/><path d="M9 13h6M9 17h4"/></svg></div>
-          <h3>PDF Toolkit <span class="pro-pill">Pro</span></h3>
-          <p>Merge, split, compress, rotate, extract.</p>
-        </div>
-        <div class="card pro">
-          <div class="tile brand"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 14a4 4 0 1 0 0-8 4 4 0 0 0 0 8z"/><path d="M5 21c.7-3.5 3.6-6 7-6s6.3 2.5 7 6"/></svg></div>
-          <h3>AI Background Remover <span class="pro-pill">Pro</span></h3>
-          <p>Apple Vision subject detection, on-device.</p>
-        </div>
-        <div class="card pro">
-          <div class="tile c-blue"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 9V5a2 2 0 0 1 2-2h4M21 9V5a2 2 0 0 0-2-2h-4M3 15v4a2 2 0 0 0 2 2h4M21 15v4a2 2 0 0 1-2 2h-4"/><path d="M8 12h8M12 8v8M9 11l3-3 3 3M9 13l3 3 3-3"/></svg></div>
-          <h3>Image Upscaler <span class="pro-pill">Pro</span></h3>
-          <p>2× / 4× upscaling with sharpening.</p>
-        </div>
-        <div class="card pro">
-          <div class="tile c-mint"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 3v15a2 2 0 0 0 2 2h13"/><path d="M3 6h15a2 2 0 0 1 2 2v13"/></svg></div>
-          <h3>Smart Crop <span class="pro-pill">Pro</span></h3>
-          <p>Auto-crop to any ratio via Vision saliency.</p>
-        </div>
-        <div class="card pro">
-          <div class="tile c-orange"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 10h18"/><path d="M8 14h8M8 17h5"/><path d="M17.5 16.5l1.5 1.5 3-3"/></svg></div>
-          <h3>Document Scanner <span class="pro-pill">Pro</span></h3>
-          <p>Auto-crop, deskew, and AI receipt extraction.</p>
-        </div>
-        <div class="card pro">
-          <div class="tile c-violet"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg></div>
-          <h3>Portrait Depth <span class="pro-pill">Pro</span></h3>
-          <p>Core ML depth. Background blur &amp; relight.</p>
-        </div>
-        <div class="card pro">
-          <div class="tile c-pink"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 3h6v6"/><path d="M21 3l-8 8"/><path d="M3 21h18"/><path d="M7 17l5-5 3 3 5-5"/></svg></div>
-          <h3>Colorize B&amp;W <span class="pro-pill">Pro</span></h3>
-          <p>Bring black &amp; white photos back to life.</p>
-        </div>
-        <div class="card pro">
-          <div class="tile c-cyan"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="2" width="6" height="12" rx="3"/><path d="M5 10a7 7 0 0 0 14 0"/><path d="M12 17v5"/><path d="M8 22h8"/></svg></div>
-          <h3>Transcribe <span class="pro-pill">Pro</span></h3>
-          <p>Audio → text, SRT, VTT. Whisper on-device.</p>
-        </div>
-        <div class="card pro">
-          <div class="tile c-amber"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="14" rx="2"/><path d="M3 8h18"/><path d="M7 13h10M7 16h6"/></svg></div>
-          <h3>Screenshot Designer <span class="pro-pill">Pro</span></h3>
-          <p>App Store marketing shots. 23 languages.</p>
-        </div>
-      </div>
-    </section>
-
-    <section id="pricing">
-      <div class="section-label">Pricing</div>
-      <h2>Simple and honest.</h2>
-      <p class="lede">Free tools are free forever. Knack Pro is a one-time purchase — no subscription, ever.</p>
-
-      <div class="price-wrap">
-        <div class="price">
-          <div class="tier">Free</div>
-          <div class="amount">$0</div>
-          <p class="note">11 tools, unlimited use.</p>
-          <ul>
-            <li>Image Converter &amp; Compressor (HEIC, WebP, PNG, JPEG)</li>
-            <li>Video &amp; Audio Converter</li>
-            <li>Image Upscaler (2× / 4×)</li>
-            <li>Photo Enhance + Face Restoration</li>
-            <li>Color Palette + Color Picker</li>
-            <li>QR Code Generator</li>
-            <li>Cleaning Lock</li>
-            <li>Menu bar companion + Finder right-click actions</li>
-          </ul>
-        </div>
-        <div class="price pro">
-          <div class="tier">Knack Pro</div>
-          <div class="amount">$4.99</div>
-          <p class="note">One-time purchase. Yours forever.</p>
-          <ul>
-            <li>AI Background Remover</li>
-            <li>PDF Toolkit (merge / split / compress)</li>
-            <li>Text Extractor (OCR)</li>
-            <li>Document Scanner + Smart Crop</li>
-            <li>Transcribe (Whisper, on-device)</li>
-            <li>System Stats in your menu bar</li>
-            <li>Tidy Folders with one-click undo</li>
-            <li>Portrait Depth + Colorize B&amp;W</li>
-            <li>App Icon Generator + App Store Screenshots</li>
-          </ul>
-        </div>
-      </div>
-
-      <p class="pricing-footnote">
-        New Pro tools and upgrades ship regularly. Buy once — every future addition is
-        included at no extra cost.
-      </p>
-    </section>
-
-    <section class="tight">
-      <div class="section-label">Why Knack</div>
-      <h2>Native. Private. Offline. Out of the way.</h2>
-      <div class="grid why-grid">
-        <div class="card">
-          <div class="tile c-amber"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M13 2L4 14h7l-1 8 9-12h-7z"/></svg></div>
-          <h3>100% native SwiftUI</h3>
-          <p>No Electron. No web views. Starts instantly, feels native.</p>
-        </div>
-        <div class="card">
-          <div class="tile c-green"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/><circle cx="12" cy="16" r="1.4" fill="currentColor"/></svg></div>
-          <h3>Works offline</h3>
-          <p>Every tool runs on your Mac. Your files never leave the device.</p>
-        </div>
-        <div class="card">
-          <div class="tile c-violet"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="3" width="20" height="4" rx="1"/><path d="M7 7v4M12 7v4M17 7v4"/><rect x="6" y="13" width="12" height="8" rx="2"/></svg></div>
-          <h3>Menu bar, always</h3>
-          <p>Colors and text from anywhere on screen. Optional Dock-free mode.</p>
-        </div>
-        <div class="card">
-          <div class="tile c-pink"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20.8 11.5a8.5 8.5 0 1 1-9.3-9.3"/><path d="M22 4l-9 9-3-3"/></svg></div>
-          <h3>No subscription</h3>
-          <p>Free stays free. Pro is one-time $4.99, yours forever.</p>
-        </div>
-      </div>
-    </section>
-
     <footer>
       <div class="links">
+        <a href="https://apps.apple.com/app/id6762058455" data-download>Download</a>
         <a href="privacy.html">Privacy</a>
-        <a href="heic-to-jpg-mac.html">Image Converter</a>
-        <a href="remove-background-mac.html">AI Background Remover</a>
-        <a href="mac-menu-bar-system-monitor.html">System Stats</a>
-        <a href="organize-downloads-folder-mac.html">Tidy Folders</a>
-        <a href="scan-receipts-to-pdf-mac.html">Document Scanner</a>
-        <a href="convert-video-mac.html">Video Converter</a>
+        <a href="press.html">Press</a>
         <a href="mailto:support@coursion.studio">Support</a>
         <a href="https://x.com/kuraydev" target="_blank" rel="noopener">@kuraydev</a>
       </div>
-      <div>© 2026 Coursion · Made in SwiftUI</div>
+      <div class="links guides">
+        <span>Guides</span>
+        <a href="heic-to-jpg-mac.html">HEIC to JPG</a>
+        <a href="remove-background-mac.html">Remove a background</a>
+        <a href="mac-menu-bar-system-monitor.html">Menu bar system monitor</a>
+        <a href="organize-downloads-folder-mac.html">Organise Downloads</a>
+        <a href="scan-receipts-to-pdf-mac.html">Scan receipts to PDF</a>
+        <a href="convert-video-mac.html">Convert video</a>
+      </div>
+      <div>© 2026 Coursion Studio</div>
     </footer>
   </div>
 </body>
