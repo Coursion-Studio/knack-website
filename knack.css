@@ -1,50 +1,61 @@
 :root { --blue: #4C8DFF; }
-html { scroll-padding-top: 72px; }
+html { scroll-padding-top: 88px; }
 .sprite { position: absolute; width: 0; height: 0; overflow: hidden; }
 :is(.tile, .free-chips, .lp-ico, .mb-ico, .fd-pick-list) svg { fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
 .split-copy .aside a, .trust a { color: var(--accent-text); text-decoration: none; }
 .trust a:hover { text-decoration: underline; }
 
-.bar-space { height: 62px; }
-.bar { --bar-h: 62px; position: fixed; inset: 0 0 auto; z-index: 100; }
-.bar::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  z-index: -1;
-  background: color-mix(in srgb, var(--page) 72%, transparent);
-  -webkit-backdrop-filter: blur(18px) saturate(1.4);
-  backdrop-filter: blur(18px) saturate(1.4);
-  box-shadow: inset 0 -1px 0 rgb(255 255 255 / 0.07), 0 10px 30px -18px rgb(0 0 0 / 0.6);
-  opacity: 0;
-  transition: opacity 0.25s ease;
-}
-.bar.scrolled { --bar-h: 52px; }
-.bar.scrolled::before { opacity: 1; }
-.bar-in { display: flex; align-items: center; gap: 10px; max-width: 1080px; height: var(--bar-h); margin: 0 auto; padding: 0 28px; transition: height 0.25s var(--ease-out); }
-.bar a { text-decoration: none; }
-.bar-brand { display: inline-flex; align-items: center; gap: 10px; color: var(--text-primary); font-size: 16px; font-weight: 650; letter-spacing: -0.01em; }
-.bar-brand img { width: 26px; height: 26px; border-radius: 6px; }
-.bar-nav { display: flex; align-items: center; gap: 2px; margin: 0 auto; }
-.bar-nav a { padding: 7px 12px; border-radius: 8px; font-size: 14px; font-weight: 500; color: var(--text-secondary); transition: color 0.15s ease, background 0.15s ease; }
-.bar-nav a:hover { color: var(--text-primary); background: rgb(255 255 255 / 0.06); }
-.bar-get {
-  display: inline-flex;
+.kbar-space { height: 84px; }
+.kbar { position: fixed; inset: 14px 0 auto; z-index: 100; display: flex; justify-content: center; pointer-events: none; transition: inset 0.3s var(--ease-out); }
+.kbar.scrolled { inset: 8px 0 auto; }
+.kbar a { text-decoration: none; }
+.kbar-pill {
+  pointer-events: auto;
+  position: relative;
+  display: flex;
   align-items: center;
-  height: 34px;
-  padding: 0 14px;
-  border-radius: 9px;
-  font-size: 14px;
-  font-weight: 600;
-  white-space: nowrap;
-  color: var(--on-accent);
-  background: var(--pal-accent);
-  box-shadow: inset 0 1px 0 rgb(255 255 255 / 0.22);
-  transition: box-shadow 0.15s ease, transform 0.12s ease;
+  gap: 6px;
+  height: 58px;
+  padding: 0 7px 0 10px;
+  border-radius: 20px;
+  background: color-mix(in srgb, var(--page) 58%, transparent);
+  -webkit-backdrop-filter: blur(22px) saturate(1.5);
+  backdrop-filter: blur(22px) saturate(1.5);
+  box-shadow: inset 0 0 0 1px rgb(255 255 255 / 0.09), inset 0 1px 0 rgb(255 255 255 / 0.08), 0 18px 40px -20px rgb(0 0 0 / 0.75);
+  transition: height 0.3s var(--ease-out), background 0.3s ease;
 }
-.bar-get:hover { box-shadow: inset 0 1px 0 rgb(255 255 255 / 0.22), 0 6px 18px color-mix(in srgb, var(--pal-accent) 40%, transparent); }
-.bar-get:active { transform: scale(0.97); }
-.bar :is(a, button):focus-visible { outline: 2px solid var(--pal-accent); outline-offset: 2px; }
+.kbar.scrolled .kbar-pill { height: 50px; background: color-mix(in srgb, var(--page) 78%, transparent); }
+.kbar-brand { display: inline-flex; align-items: center; gap: 9px; padding: 0 6px 0 2px; color: var(--text-primary); font-size: 15.5px; font-weight: 650; letter-spacing: -0.01em; }
+.kbar-brand img { width: 28px; height: 28px; filter: drop-shadow(0 4px 10px color-mix(in srgb, var(--pal-accent) 45%, transparent)); }
+.kbar-sep { width: 1px; height: 26px; margin: 0 4px; background: rgb(255 255 255 / 0.1); }
+.kbar-dock { position: relative; display: flex; align-items: flex-end; gap: 3px; height: 100%; padding-bottom: 9px; }
+.kbar.scrolled .kbar-dock { padding-bottom: 7px; }
+.kbar-dock a { position: relative; display: grid; place-items: center; width: 40px; height: 40px; border-radius: 11px; transform-origin: 50% 100%; transition: transform 0.45s var(--spring-key), margin 0.45s var(--spring-key); }
+.kbar.scrolled .kbar-dock a { width: 36px; height: 36px; }
+.kd-tile { display: grid; place-items: center; width: 100%; height: 100%; border-radius: inherit; color: rgb(255 255 255 / 0.62); background: linear-gradient(rgb(255 255 255 / 0.08), rgb(255 255 255 / 0.03)); box-shadow: inset 0 0 0 1px rgb(255 255 255 / 0.07); transition: color 0.2s ease, background 0.3s ease, box-shadow 0.3s ease; }
+.kd-tile svg { width: 19px; height: 19px; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+.kbar-dock a.on .kd-tile { color: #fff; background: linear-gradient(140deg, var(--pal-accent), var(--pal-second)); box-shadow: inset 0 1px 0 rgb(255 255 255 / 0.25), 0 6px 16px -4px color-mix(in srgb, var(--pal-accent) 60%, transparent); }
+.kbar-dock a:hover .kd-tile { color: #fff; }
+.kbar-dock em { position: absolute; top: calc(100% + 12px); left: 50%; padding: 4px 9px; border-radius: 7px; font-size: 12px; font-style: normal; font-weight: 600; white-space: nowrap; color: var(--text-primary); background: rgb(24 20 34 / 0.92); box-shadow: inset 0 0 0 1px rgb(255 255 255 / 0.1), 0 8px 20px -8px rgb(0 0 0 / 0.7); opacity: 0; transform: translate(-50%, -4px); pointer-events: none; transition: opacity 0.15s ease, transform 0.25s var(--ease-out); }
+.kbar-dock a:hover em, .kbar-dock a:focus-visible em { opacity: 1; transform: translate(-50%, 0); }
+.kbar-dock a.mag-1 { transform: scale(1.32) translateY(-3px); margin: 0 7px; z-index: 2; }
+.kbar-dock a.mag-2 { transform: scale(1.14) translateY(-1px); margin: 0 3px; }
+.kd-ind { position: absolute; bottom: 2px; left: 0; width: 4px; height: 4px; border-radius: 50%; background: var(--pal-accent); box-shadow: 0 0 8px var(--pal-accent); opacity: 0; transform: translateX(var(--x, 0px)); transition: transform var(--spring-t) var(--spring), opacity 0.2s ease; }
+.kbar-dock.has-on .kd-ind { opacity: 1; }
+.kbar-link { display: inline-flex; align-items: center; gap: 6px; height: 34px; padding: 0 10px; border-radius: 10px; font-size: 13.5px; font-weight: 550; color: var(--text-secondary); transition: color 0.15s ease, background 0.15s ease; }
+.kbar-link:hover { color: var(--text-primary); background: rgb(255 255 255 / 0.06); }
+.kbar-link b { padding: 1px 6px; border-radius: 6px; font-size: 11px; font-weight: 700; color: var(--accent-text); background: color-mix(in srgb, var(--pal-accent) 16%, transparent); }
+.kbar-get {
+  display: inline-flex; align-items: center; gap: 7px; height: 40px; margin-left: 4px; padding: 0 15px 0 12px; border-radius: 13px;
+  font-size: 14px; font-weight: 650; white-space: nowrap; color: var(--on-accent);
+  background: linear-gradient(140deg, var(--pal-accent), color-mix(in srgb, var(--pal-accent) 55%, var(--pal-second)));
+  box-shadow: inset 0 1px 0 rgb(255 255 255 / 0.25), 0 8px 22px -8px color-mix(in srgb, var(--pal-accent) 70%, transparent);
+  transition: transform 0.2s var(--ease-out), box-shadow 0.2s ease;
+}
+.kbar-get svg { width: 17px; height: 17px; fill: none; stroke: currentColor; stroke-width: 2.2; stroke-linecap: round; stroke-linejoin: round; }
+.kbar-get:hover { box-shadow: inset 0 1px 0 rgb(255 255 255 / 0.3), 0 10px 26px -8px color-mix(in srgb, var(--pal-accent) 85%, transparent); }
+.kbar-get:active { transform: scale(0.97); }
+.kbar :is(a, button):focus-visible { outline: 2px solid var(--pal-accent); outline-offset: 2px; }
 
 .mesh .m4 { background: radial-gradient(closest-side, color-mix(in srgb, var(--blue) 55%, var(--page)), transparent); }
 .mesh .m3 { background: radial-gradient(closest-side, color-mix(in srgb, var(--pal-second) 78%, var(--page)), transparent); }
@@ -497,18 +508,21 @@ footer .guides a { color: var(--text-tertiary); }
   .cta-band { grid-template-columns: 1fr; justify-items: center; text-align: center; }
   .cta-band .cta-row { justify-content: center; }
   .cta-band .lede { margin: 0 auto; }
-  .bar-in { padding: 0 18px; }
 }
 @media (max-width: 420px) {
   .seg-b { padding: 7px 12px; }
 }
 @media (max-width: 560px) {
-  .bar-nav { display: none; }
-  .bar-get { margin-left: auto; }
+  .kbar-link, .kbar-brand span { display: none; }
+  .kbar-pill { gap: 3px; padding: 0 6px; }
+  .kbar-dock a { width: 34px; height: 34px; }
+  .kd-tile svg { width: 17px; height: 17px; }
+  .kbar-get span { display: none; }
+  .kbar-get { padding: 0 11px; }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .bar-in { transition: none; }
+  .kbar, .kbar-pill, .kbar-dock a, .kd-ind { transition: none; }
   .tf, .tfo { transition: opacity 0.2s ease; }
   .mb-procs li, .mb-meter u, .mb-procs .pb u, .co-handle { transition: none; }
   .fd-new, .cm.enter, .tool-grid .feature-card.flash { animation: none; }

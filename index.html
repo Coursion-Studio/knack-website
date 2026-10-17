@@ -8,8 +8,8 @@
   <link rel="canonical" href="https://knack.coursion.studio/" />
   <link rel="icon" type="image/png" href="screenshots/icon.png" />
   <link rel="apple-touch-icon" href="screenshots/icon.png" />
-  <link rel="stylesheet" href="stage.css?v=1d5ceac846" />
-  <link rel="stylesheet" href="knack.css?v=841b330dea" />
+  <link rel="stylesheet" href="stage.css?v=c7890734" />
+  <link rel="stylesheet" href="knack.css?v=d93d0d41" />
   <meta property="og:type" content="website" />
   <meta property="og:url" content="https://knack.coursion.studio/" />
   <meta property="og:title" content="Knack — 20+ native Mac tools in one app" />
@@ -33,7 +33,7 @@
   }
   </script>
   <script>document.documentElement.classList.add("js");window.__rv=setTimeout(function(){document.documentElement.classList.add("reveal-all")},4000);</script>
-  <script defer src="palettes.js?v=5d2d7b0998"></script>
+  <script defer src="palettes.js?v=4271fe06"></script>
   <script>
     window.STAGE = {
       download: "https://apps.apple.com/app/id6762058455",
@@ -73,8 +73,8 @@
       }
     };
   </script>
-  <script defer src="stage.js?v=bda7026e0e"></script>
-  <script defer src="knack.js?v=98ffa2af63"></script>
+  <script defer src="stage.js?v=b4de68b6"></script>
+  <script defer src="knack.js?v=98d703de"></script>
   <script defer src="https://polaris-backend-489776622782.europe-west1.run.app/api/v1/analytics/t.js" data-site="knack.coursion.studio"></script>
 </head>
 <body>
@@ -104,25 +104,36 @@
     <symbol id="g-ocr" viewBox="0 0 24 24"><path d="M4 8.5V6a2 2 0 0 1 2-2h2.5M15.5 4H18a2 2 0 0 1 2 2v2.5M20 15.5V18a2 2 0 0 1-2 2h-2.5M8.5 20H6a2 2 0 0 1-2-2v-2.5"/><path d="M8.5 9h7M12 9v7"/></symbol>
     <symbol id="g-tidy" viewBox="0 0 24 24"><path d="M3.5 13.5 6 5h12l2.5 8.5V18a1.5 1.5 0 0 1-1.5 1.5H5A1.5 1.5 0 0 1 3.5 18z"/><path d="M3.5 13.5h5l1 2h5l1-2h5"/></symbol>
     <symbol id="g-stats" viewBox="0 0 24 24"><path d="M4 4v16h16"/><path d="m7.5 15 3.5-4 3 2.5 5-6.5"/></symbol>
+    <symbol id="g-search" viewBox="0 0 24 24"><circle cx="11" cy="11" r="6.5"/><path d="m16 16 4 4"/></symbol>
+    <symbol id="g-finder" viewBox="0 0 24 24"><rect x="3.5" y="4.5" width="17" height="13" rx="2.5"/><path d="M3.5 8.5h17"/><path d="M13 12.5v8l2-1.8 1.3 3 1.3-.6-1.3-2.9h2.7z" fill="currentColor"/></symbol>
+    <symbol id="g-get" viewBox="0 0 24 24"><path d="M12 4v11M7.5 10.5 12 15l4.5-4.5M5 19.5h14"/></symbol>
     <symbol id="g-calc" viewBox="0 0 24 24"><rect x="5" y="3.5" width="14" height="17" rx="2.5"/><path d="M8.5 7.5h7M8.5 12h.01M12 12h.01M15.5 12h.01M8.5 16h.01M12 16h.01M15.5 16h.01"/></symbol>
   </svg>
 
-  <div class="bar">
-    <div class="bar-in">
-      <a class="bar-brand" href="#top"><img src="screenshots/icon.png" alt="" width="26" height="26" /><span>Knack</span></a>
-      <nav class="bar-nav" aria-label="Main">
-        <a href="#find">Tour</a>
-        <a href="#tools">Tools</a>
-        <a href="#pricing">Pricing</a>
+  <div class="kbar">
+    <div class="kbar-pill">
+      <a class="kbar-brand" href="#top"><img src="screenshots/icon.png" alt="" width="28" height="28" /><span>Knack</span></a>
+      <span class="kbar-sep" aria-hidden="true"></span>
+      <nav class="kbar-dock" aria-label="Tour">
+        <span class="kd-ind" aria-hidden="true"></span>
+          <a href="#find" data-sec="find" aria-label="Search"><span class="kd-tile"><svg viewBox="0 0 24 24"><use href="#g-search"/></svg></span><em>Search</em></a>
+          <a href="#convert" data-sec="convert" aria-label="Convert"><span class="kd-tile"><svg viewBox="0 0 24 24"><use href="#g-convert"/></svg></span><em>Convert</em></a>
+          <a href="#cutout" data-sec="cutout" aria-label="Cutout"><span class="kd-tile"><svg viewBox="0 0 24 24"><use href="#g-cutout"/></svg></span><em>Cutout</em></a>
+          <a href="#finder" data-sec="finder" aria-label="Right-click"><span class="kd-tile"><svg viewBox="0 0 24 24"><use href="#g-finder"/></svg></span><em>Right-click</em></a>
+          <a href="#stats" data-sec="stats" aria-label="Menu bar"><span class="kd-tile"><svg viewBox="0 0 24 24"><use href="#g-stats"/></svg></span><em>Menu bar</em></a>
+          <a href="#tidy" data-sec="tidy" aria-label="Tidy"><span class="kd-tile"><svg viewBox="0 0 24 24"><use href="#g-tidy"/></svg></span><em>Tidy</em></a>
       </nav>
-      <a class="bar-get" href="https://apps.apple.com/app/id6762058455" data-download>Download</a>
+      <span class="kbar-sep" aria-hidden="true"></span>
+      <a class="kbar-link" href="#tools">All tools <b>23</b></a>
+      <a class="kbar-link" href="#pricing">Pricing</a>
+      <a class="kbar-get" href="https://apps.apple.com/app/id6762058455" data-download><svg viewBox="0 0 24 24"><use href="#g-get"/></svg><span>Get Knack</span></a>
     </div>
   </div>
 
   <header id="top" class="stage-hero reveal" data-live>
     <div class="mesh" aria-hidden="true"><i class="m1"></i><i class="m2"></i><i class="m3"></i><i class="m4"></i></div>
     <div class="container">
-      <div class="bar-space" aria-hidden="true"></div>
+      <div class="kbar-space" aria-hidden="true"></div>
 
       <div class="fan" role="img" aria-label="The Knack app icon with eight of its tools fanned out beneath it: AI Background Remover, Image Converter, PDF Toolkit, Text Extractor, Image Compressor, Transcribe, System Stats and Tidy Folders.">
         <img class="fan-icon" src="screenshots/icon.png" alt="" width="160" height="160" fetchpriority="high" />

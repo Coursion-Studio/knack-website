@@ -13,16 +13,47 @@
   const clamp = (v, a, b) => Math.max(a, Math.min(b, v));
   const glyph = (name) => `<svg viewBox="0 0 24 24"><use href="#g-${name}"/></svg>`;
 
-  const bar = $(".bar");
+  const bar = $(".kbar");
   if (bar) {
-    let ticking = false;
+    const dock = $(".kbar-dock", bar);
+    const tiles = $$("a[data-sec]", dock);
+    const ind = $(".kd-ind", dock);
+    let ticking = false, current = null;
+    const place = (a) => {
+      tiles.forEach((t) => t.classList.toggle("on", t === a));
+      dock.classList.toggle("has-on", !!a);
+      if (a) ind.style.setProperty("--x", (a.offsetLeft + a.offsetWidth / 2 - 2) + "px");
+    };
+    const spy = () => {
+      const line = innerHeight * 0.38;
+      let pick = null;
+      tiles.forEach((t) => {
+        const sec = document.getElementById(t.dataset.sec);
+        if (!sec) return;
+        const r = sec.getBoundingClientRect();
+        if (r.top <= line && r.bottom > line) pick = t;
+      });
+      if (pick !== current) { current = pick; place(pick); }
+    };
     const onScroll = () => {
       if (ticking) return;
       ticking = true;
-      requestAnimationFrame(() => { ticking = false; bar.classList.toggle("scrolled", scrollY > 12); });
+      requestAnimationFrame(() => { ticking = false; bar.classList.toggle("scrolled", scrollY > 12); spy(); });
     };
     addEventListener("scroll", onScroll, { passive: true });
+    addEventListener("resize", () => place(current));
     bar.classList.toggle("scrolled", scrollY > 12);
+    spy();
+    const clearMag = () => tiles.forEach((t) => t.classList.remove("mag-1", "mag-2"));
+    if (!calm() && matchMedia("(hover: hover)").matches) {
+      tiles.forEach((t, i) => t.addEventListener("pointerenter", () => {
+        clearMag();
+        t.classList.add("mag-1");
+        if (tiles[i - 1]) tiles[i - 1].classList.add("mag-2");
+        if (tiles[i + 1]) tiles[i + 1].classList.add("mag-2");
+      }));
+      dock.addEventListener("pointerleave", clearMag);
+    }
   }
 
   function radioGroup(items, pick) {
