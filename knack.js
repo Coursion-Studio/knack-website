@@ -3,7 +3,7 @@
 
   const S = window.Stage;
   if (!S) return;
-  const { Spring, run, watch, evaluate } = S;
+  const { Spring, run, watch } = S;
   const cfg = window.STAGE || {};
   const still = matchMedia("(prefers-reduced-motion: reduce)");
   const frozen = new URLSearchParams(location.search).has("static");
@@ -76,17 +76,55 @@
     });
   }
 
-  const L = Object.assign({
-    label: "Knack",
-    items: [],
-    demo: "",
-    maths: "Maths",
-    copy: "Copy",
-    open: "Open",
-    copied: (t) => `Copied ${t}`,
-    opened: (t) => `Opening ${t}`,
-    empty: "No tool by that name."
-  }, cfg.launcher || {});
+  $$(".fan").forEach((fan) => {
+    const items = $$(".fan-item", fan);
+    const n = items.length;
+    if (n < 2) return;
+    const NS = "http://www.w3.org/2000/svg";
+    const arc = document.createElementNS(NS, "svg");
+    arc.setAttribute("class", "fan-arc");
+    arc.setAttribute("aria-hidden", "true");
+    const path = document.createElementNS(NS, "path");
+    arc.appendChild(path);
+    fan.prepend(arc);
+    const small = matchMedia("(max-width: 720px)");
+    function lay() {
+      const narrow = small.matches;
+      const vw = document.documentElement.clientWidth;
+      const tile = narrow ? 40 : 56;
+      const step = narrow ? 52 : 118;
+      const W = Math.min((step * (n - 1)) / 2, vw / 2 - tile / 2 - (narrow ? 8 : 24));
+      const y0 = narrow ? 30 : 36, depth = narrow ? 78 : 92;
+      const yAt = (x) => y0 + depth * (1 - (x / W) * (x / W));
+      items.forEach((el, i) => {
+        const x = -W + (2 * W * i) / (n - 1);
+        const slope = (-2 * depth * x) / (W * W);
+        el.style.setProperty("--x", x.toFixed(1));
+        el.style.setProperty("--y", yAt(x).toFixed(1));
+        el.style.setProperty("--r", ((Math.atan(slope) * 180) / Math.PI * 0.35).toFixed(2) + "deg");
+      });
+      const off = tile / 2 - 28;
+      const pts = [];
+      for (let k = 0; k <= 48; k++) {
+        const x = -W * 1.06 + (2.12 * W * k) / 48;
+        pts.push(`${x.toFixed(1)},${(yAt(x) + off).toFixed(1)}`);
+      }
+      path.setAttribute("d", "M" + pts.join(" L"));
+    }
+    lay();
+    addEventListener("resize", lay);
+  });
+
+  const CATS = [
+    ["all", "All", "#C75CEB"], ["pro", "Pro", "#FF528C"], ["ai", "AI", "#A87AFF"], ["image", "Image", "#5CA8FF"],
+    ["pdf", "PDF", "#FF754D"], ["audio", "Audio", "#4DD98C"], ["video", "Video", "#9E6BFF"],
+    ["utility", "Utility", "#33D9D9"], ["productivity", "Productivity", "#FFB847"]
+  ];
+  const TOOLS = (cfg.launcher && cfg.launcher.items) || [];
+  const springEase = (() => {
+    const v = getComputedStyle(document.documentElement).getPropertyValue("--spring").trim();
+    try { document.documentElement.animate([], { easing: v }); return v; } catch (e) { return "cubic-bezier(0.2, 0.9, 0.3, 1.05)"; }
+  })();
 
   function score(q, item) {
     const n = item.title.toLowerCase();
@@ -95,353 +133,328 @@
     const keys = (item.keys || "").split(/\s+/);
     if (keys.includes(q)) return 180 - n.length * 0.1;
     if (q.length >= 2 && keys.some((k) => k.startsWith(q))) return 150 - n.length * 0.1;
-    if (q.length < 3) return null;
-    let at = -1, gaps = 0;
-    for (const ch of q) {
-      const next = n.indexOf(ch, at + 1);
-      if (next < 0) return null;
-      gaps += next - at - 1;
-      at = next;
-    }
-    return gaps > 8 ? null : 100 - gaps - n.length * 0.1;
-  }
-  const fmtNum = (v) => parseFloat(v.toPrecision(12)).toLocaleString("en-US", { maximumFractionDigits: 10 });
-
-  function results(query, limit = 3) {
-    const q = query.trim();
-    if (!q) return [];
-    const rows = [];
-    const v = evaluate(q);
-    if (v !== null) rows.push({ id: "calc", title: fmtNum(v), raw: String(parseFloat(v.toPrecision(12))), sub: `${L.maths} · ${q}`, glyph: "calc", trailing: L.copy, kind: "calc" });
-    const lq = q.toLowerCase();
-    L.items.map((item) => ({ item, s: score(lq, item) }))
-      .filter((m) => m.s !== null)
-      .sort((a, b) => b.s - a.s || a.item.title.localeCompare(b.item.title))
-      .slice(0, limit)
-      .forEach(({ item }) => rows.push({ id: "t:" + item.title, title: item.title, sub: item.sub || "Tool", glyph: item.glyph, trailing: L.open, kind: "item" }));
-    return rows.slice(0, limit);
+    if (q.length >= 3 && item.tagline && item.tagline.toLowerCase().includes(q)) return 120 - n.length * 0.1;
+    return null;
   }
 
-  $$('[data-stage="tools-launcher"]').forEach((panel) => {
-    const input = $(".lp-input", panel);
-    const list = $(".lp-list", panel);
-    const box = $(".lp-results", panel);
-    const status = $(".lp-label", panel);
-    const verb = $(".lp-verb", panel);
-    const emptyEl = $(".lp-empty", panel);
-    const idleEmpty = emptyEl.textContent;
-    const section = panel.closest("section") || document;
-    let rows = [], sel = 0, els = new Map(), statusTimer = 0, auto = 0, touched = false;
+  $$('[data-stage="home-search"]').forEach((section) => {
+    const hw = $(".hw", section);
+    const input = $(".hw-input", section);
+    const grid = $(".hw-grid", section);
+    const catsEl = $(".hw-cats", section);
+    const scroller = $(".hw-scroll", section);
+    const empty = $(".hw-empty", section);
+    const status = $(".hw-status", section);
+    const L = Object.assign({ demo: "", opened: (t) => `In Knack, ${t} opens`, empty: "No tools match." }, cfg.launcher || {});
+    let cat = "all", auto = 0, touched = false;
+    const inCat = (t, c) => c === "all" || (c === "pro" ? t.tier === "pro" : t.cats.includes(c));
+    const say = (t) => { status.textContent = t; };
 
-    function fill(li, r) {
-      $(".lp-t", li).textContent = r.title;
-      $(".lp-s", li).textContent = r.sub;
-      $(".lp-tr", li).textContent = r.trailing || "";
-    }
-    function rowEl(r) {
+    const cards = TOOLS.map((t) => {
       const li = document.createElement("li");
-      li.className = "lp-row";
-      li.setAttribute("role", "option");
-      li.innerHTML = `<span class="lp-ico sym">${glyph(r.glyph)}</span><span class="lp-tx"><span class="lp-t"></span><span class="lp-s"></span></span><span class="lp-tr"></span>`;
-      fill(li, r);
-      return li;
-    }
-    function render() {
-      rows = results(input.value);
-      sel = Math.min(sel, Math.max(0, rows.length - 1));
-      const next = new Map();
-      rows.forEach((r) => {
-        let li = els.get(r.id);
-        if (li) fill(li, r);
-        else {
-          li = rowEl(r);
-          li.id = "lp-" + r.id.replace(/[^a-z0-9]/gi, "-");
-          li.addEventListener("mousedown", (e) => e.preventDefault());
-          li.addEventListener("click", () => { sel = rows.findIndex((x) => x.id === r.id); mark(); activate(); });
-          if (!calm()) li.classList.add("enter");
-        }
-        next.set(r.id, li);
-        list.appendChild(li);
+      const b = document.createElement("button");
+      b.type = "button";
+      b.className = "hw-card";
+      b.style.setProperty("--tc", t.color);
+      b.innerHTML = `<span class="hw-tile">${glyph(t.glyph)}</span><span class="hw-tag${t.tier === "pro" ? " pro" : ""}"></span><b></b><span class="hw-tl"></span><span class="hw-go" aria-hidden="true">→</span>`;
+      const primary = CATS.find((c) => c[0] === t.cats[0]);
+      $(".hw-tag", b).textContent = t.tier === "pro" ? "Pro" : primary[1];
+      $("b", b).textContent = t.title;
+      $(".hw-tl", b).textContent = t.tagline;
+      b.setAttribute("aria-label", `${t.title}, ${t.tier === "pro" ? "Pro" : "free"}. ${t.tagline}`);
+      b.addEventListener("click", () => openTool(t, b));
+      li.appendChild(b);
+      grid.appendChild(li);
+      return { t, li, b };
+    });
+
+    const chips = CATS.map(([id, label, color]) => {
+      const b = document.createElement("button");
+      b.type = "button";
+      b.className = "hw-cat";
+      b.setAttribute("role", "radio");
+      b.setAttribute("aria-checked", id === "all" ? "true" : "false");
+      b.dataset.cat = id;
+      b.style.setProperty("--cc", color);
+      b.append(label + " ");
+      const s = document.createElement("span");
+      s.textContent = TOOLS.filter((t) => inCat(t, id)).length;
+      b.appendChild(s);
+      catsEl.appendChild(b);
+      return b;
+    });
+    const setCat = (id) => {
+      cat = id;
+      chips.forEach((b) => {
+        const on = b.dataset.cat === id;
+        b.setAttribute("aria-checked", on ? "true" : "false");
+        b.tabIndex = on ? 0 : -1;
       });
-      els.forEach((li, id) => { if (!next.has(id)) li.remove(); });
-      els = next;
-      requestAnimationFrame(() => requestAnimationFrame(() => $$(".enter", list).forEach((li) => li.classList.remove("enter"))));
-      emptyEl.textContent = input.value.trim() ? L.empty : idleEmpty;
-      box.classList.toggle("empty", !rows.length);
-      mark();
+    };
+    radioGroup(chips, (b) => { touched = true; stopAuto(); cat = b.dataset.cat; apply(true); });
+
+    function openTool(t, b) {
+      b.classList.remove("flash");
+      void b.offsetWidth;
+      if (!calm()) b.classList.add("flash");
+      say(L.opened(t.title) + ".");
     }
-    function mark() {
-      box.style.setProperty("--sel", sel);
-      rows.forEach((r, n) => {
-        const li = els.get(r.id);
-        li.classList.toggle("sel", n === sel);
-        li.setAttribute("aria-selected", n === sel ? "true" : "false");
-      });
-      const r = rows[sel];
-      if (verb) verb.textContent = r ? r.trailing : L.open;
-      if (r) input.setAttribute("aria-activedescendant", els.get(r.id).id); else input.removeAttribute("aria-activedescendant");
+
+    function apply(animate) {
+      const raw = input.value.trim();
+      const q = raw.toLowerCase();
+      let list = cards.filter((c) => inCat(c.t, cat));
+      if (q) list = list.map((c) => ({ c, s: score(q, c.t) })).filter((m) => m.s !== null).sort((a, b) => b.s - a.s).map((m) => m.c);
+      const show = new Set(list);
+      const motion = animate && !calm() && !!grid.animate;
+      scroller.scrollTop = 0;
+      const first = new Map();
+      if (motion) {
+        const box = grid.getBoundingClientRect();
+        cards.forEach((c) => {
+          if (c.li.hidden) return;
+          const r = c.li.getBoundingClientRect();
+          first.set(c, r);
+          if (show.has(c)) return;
+          const g = c.li.cloneNode(true);
+          g.className = "hw-ghost";
+          g.setAttribute("aria-hidden", "true");
+          g.style.cssText = `left:${r.left - box.left}px;top:${r.top - box.top}px;width:${r.width}px;height:${r.height}px`;
+          $("button", g).tabIndex = -1;
+          grid.appendChild(g);
+          g.animate([{ opacity: 1, transform: "scale(1)" }, { opacity: 0, transform: "scale(0.86)" }], { duration: 220, easing: "cubic-bezier(0.23, 1, 0.32, 1)", fill: "forwards" }).onfinish = () => g.remove();
+        });
+      }
+      cards.forEach((c) => { c.li.hidden = !show.has(c); });
+      list.forEach((c) => grid.appendChild(c.li));
+      if (motion) {
+        list.forEach((c, i) => {
+          const f = first.get(c);
+          if (f) {
+            const r = c.li.getBoundingClientRect();
+            const dx = f.left - r.left, dy = f.top - r.top;
+            if (dx || dy) c.li.animate([{ transform: `translate(${dx}px, ${dy}px)` }, { transform: "none" }], { duration: 600, easing: springEase });
+          } else {
+            c.li.animate([{ opacity: 0, transform: "scale(0.9)" }, { opacity: 1, transform: "none" }], { duration: 480, delay: Math.min(i, 8) * 30, easing: springEase, fill: "backwards" });
+          }
+        });
+      }
+      empty.hidden = list.length > 0;
+      empty.textContent = L.empty;
+      const label = CATS.find((c) => c[0] === cat)[1];
+      const n = list.length;
+      if (q) say(`${n} ${n === 1 ? "tool matches" : "tools match"} “${raw}”${cat === "all" ? "" : " in " + label}.`);
+      else if (cat === "all") say("23 tools. Type to filter, or pick a category.");
+      else say(`${n} ${label} tool${n === 1 ? "" : "s"}.`);
     }
-    function say(text) {
-      clearTimeout(statusTimer);
-      status.textContent = text;
-      status.classList.add("flash");
-      statusTimer = setTimeout(() => { status.textContent = L.label; status.classList.remove("flash"); }, 2000);
-    }
-    function activate() {
-      const r = rows[sel];
-      if (!r) return;
-      if (r.kind === "calc") {
-        if (navigator.clipboard) navigator.clipboard.writeText(r.raw).catch(() => {});
-        say(L.copied(r.title));
-      } else say(L.opened(r.title));
-    }
+
     function stopAuto() { clearTimeout(auto); auto = 0; }
     function typeIn(text, focus) {
       stopAuto();
-      if (calm()) { input.value = text; render(); if (focus) input.focus({ preventScroll: true }); return; }
+      if (calm()) { input.value = text; apply(false); if (focus) input.focus({ preventScroll: true }); return; }
       input.value = "";
-      render();
+      apply(true);
       let n = 0;
       const step = () => {
         input.value = text.slice(0, ++n);
-        render();
-        if (n < text.length) auto = setTimeout(step, 70 + Math.random() * 60);
+        apply(true);
+        if (n < text.length) auto = setTimeout(step, 90 + Math.random() * 70);
         else { auto = 0; if (focus) input.focus({ preventScroll: true }); }
       };
-      auto = setTimeout(step, 120);
+      auto = setTimeout(step, 160);
     }
 
-    status.textContent = L.label;
-    input.addEventListener("input", () => { touched = true; stopAuto(); sel = 0; render(); });
+    input.addEventListener("input", () => { touched = true; stopAuto(); apply(true); });
     input.addEventListener("focus", () => { touched = true; stopAuto(); });
     input.addEventListener("keydown", (e) => {
-      if (e.key === "ArrowDown" || e.key === "ArrowUp") {
+      if (e.key === "Enter") {
         e.preventDefault();
-        if (!rows.length) return;
-        sel = (sel + (e.key === "ArrowDown" ? 1 : -1) + rows.length) % rows.length;
-        mark();
-      } else if (e.key === "Enter") { e.preventDefault(); activate(); }
-      else if (e.key === "Escape") { input.value = ""; sel = 0; render(); }
+        const firstVisible = Array.from(grid.children).find((li) => !li.hidden && !li.classList.contains("hw-ghost"));
+        const hit = cards.find((x) => x.li === firstVisible);
+        if (hit) openTool(hit.t, hit.b);
+      } else if (e.key === "Escape" && input.value) { e.preventDefault(); input.value = ""; apply(true); }
     });
-    $$(".chip-q", section).forEach((b) => b.addEventListener("click", () => { touched = true; sel = 0; typeIn(b.dataset.q, true); }));
+    $$(".chip-q", section).forEach((b) => b.addEventListener("click", () => {
+      touched = true;
+      setCat("all");
+      typeIn(b.dataset.q, true);
+    }));
 
     if (frozen && L.demo) input.value = L.demo;
-    render();
-    watch(panel, () => {
+    apply(false);
+    watch(hw, () => {
       if (touched || input.value || !L.demo) return;
       touched = true;
-      if (calm()) { input.value = L.demo; render(); return; }
+      if (calm()) { input.value = L.demo; apply(false); return; }
       auto = setTimeout(() => typeIn(L.demo, false), 450);
     }, null, 0.6);
   });
 
   $$('[data-stage="convert"]').forEach((section) => {
-    const stage = $(".cv-stage", section);
-    const fit = stage.parentNode;
-    const file = $(".cv-file", stage);
-    const cursor = $(".cursor", stage);
-    const status = $(".cv-status", section);
-    const nameEl = $(".cv-name", file), sizeEl = $(".cv-size", file), deltaEl = $(".cv-delta", file), extEl = $(".cv-ext", file);
-    const fmtEl = $(".cv-fmt", stage);
-    const pills = $$(".seg-b", section);
-    const resetBtn = $(".cv-reset", section);
-    const FMT = {
-      jpg: { ext: "jpg", label: "JPG", size: "812 KB", delta: "−74%", up: false, note: "Same photo, a quarter of the size." },
-      png: { ext: "png", label: "PNG", size: "5.6 MB", delta: "+81%", up: true, note: "PNG is lossless, so it comes out larger." },
-      webp: { ext: "webp", label: "WebP", size: "538 KB", delta: "−83%", up: false, note: "WebP is the smallest of the three." }
+    const ic = $(".ic", section);
+    const list = $(".ic-files", ic);
+    const go = $(".ic-go", ic);
+    const clear = $(".ic-clear", ic);
+    const status = $(".ic-status", section);
+    const count = $(".ic-count", ic);
+    const fmts = $$(".ic-fmt", ic);
+    const range = $(".ic-range", ic);
+    const qv = $(".ic-qv", ic);
+    const qBox = $(".ic-q", ic);
+    const pdfRow = $(".ic-pdf", ic);
+    const rs = $(".ic-rs", ic);
+    const sw = { resize: $(".ic-resize", ic), meta: $(".ic-meta", ic), combine: $(".ic-combine", ic) };
+    const SRC = [
+      { base: "IMG_2041", ext: "HEIC", mb: 3.1, kind: "heic", px: 4032, t: "t-sunset" },
+      { base: "IMG_2042", ext: "HEIC", mb: 2.8, kind: "heic", px: 4032, t: "t-beach" },
+      { base: "Screenshot", ext: "png", mb: 1.4, kind: "png", px: 2880, t: "t-shot" }
+    ];
+    const RATIO = {
+      png: { heic: 1.81, png: 0.97 }, jpeg: { heic: 0.26, png: 0.55 }, heic: { heic: 0.98, png: 0.3 }, tiff: { heic: 3.9, png: 2.4 },
+      gif: { heic: 0.42, png: 0.38 }, bmp: { heic: 5.2, png: 3.1 }, webp: { heic: 0.17, png: 0.32 }, pdf: { heic: 0.3, png: 0.62 }
     };
-    const LAYOUT = {
-      wide: { w: 600, h: 300, others: [[50, 112], [50, 214]], home: { x: 160, y: 166 }, park: { x: 455, y: 144 }, parkScale: 0.94, zone: { x: 320, y: 14, w: 270, h: 270 } },
-      narrow: { w: 340, h: 470, others: [[58, 124], [282, 124]], home: { x: 170, y: 126 }, park: { x: 170, y: 332 }, parkScale: 0.84, zone: { x: 10, y: 222, w: 320, h: 238 } }
-    };
-    let lay = LAYOUT.wide, narrow = null, scale = 1, parked = false, fmt = "jpg", shown = null, drag = null;
-    let interacted = false, demoed = false, timers = [], workT = 0;
-    const f = { x: new Spring(lay.home.x), y: new Spring(lay.home.y), s: new Spring(1), r: new Spring(0) };
-    const c = { x: new Spring(0), y: new Spring(0) };
-    const paint = () => { file.style.transform = `translate(${f.x.x}px, ${f.y.x}px) rotate(${f.r.x}deg) scale(${f.s.x})`; };
-    const paintCursor = () => { cursor.style.transform = `translate(${c.x.x}px, ${c.y.x}px)`; };
-    const go = () => run({ springs: Object.values(f), render: paint });
-    const tune = (r, d) => Object.values(f).forEach((s) => s.tune(r, d));
-    const say = (t) => { if (status) status.textContent = t; };
-    const cancelDemo = () => { timers.forEach(clearTimeout); timers = []; cursor.classList.remove("on"); };
-    const over = (x, y) => { const z = lay.zone; return x > z.x && x < z.x + z.w && y > z.y && y < z.y + z.h; };
-    const local = (e) => { const r = stage.getBoundingClientRect(); return { x: (e.clientX - r.left) / scale, y: (e.clientY - r.top) / scale }; };
-
-    function fitStage() {
-      const n = fit.clientWidth < 540;
-      if (n !== narrow) {
-        narrow = n;
-        lay = n ? LAYOUT.narrow : LAYOUT.wide;
-        stage.classList.toggle("narrow", n);
-        stage.style.width = lay.w + "px";
-        stage.style.height = lay.h + "px";
-        fit.style.maxWidth = lay.w + "px";
-        fit.style.setProperty("--h", lay.h);
-        $$(".cv-other", stage).forEach((el, i) => { el.style.left = lay.others[i][0] + "px"; el.style.top = lay.others[i][1] + "px"; });
-        const slot = $(".cv-slot", stage);
-        slot.style.left = lay.home.x + "px";
-        slot.style.top = (lay.home.y - 16) + "px";
-        const d = parked ? lay.park : lay.home;
-        f.x.jump(d.x); f.y.jump(d.y); f.s.jump(parked ? lay.parkScale : 1);
-        paint();
-      }
-      scale = Math.min(1, fit.clientWidth / lay.w);
-      fit.style.setProperty("--s", scale);
+    const EXT = { png: "png", jpeg: "jpg", heic: "heic", tiff: "tiff", gif: "gif", bmp: "bmp", webp: "webp", pdf: "pdf" };
+    const LABEL = { png: "PNG", jpeg: "JPEG", heic: "HEIC", tiff: "TIFF", gif: "GIF", bmp: "BMP", webp: "WebP", pdf: "PDF" };
+    const LOSSY = ["jpeg", "heic", "webp"];
+    let fmt = "jpeg", quality = 90, files = [], running = false, timers = [], ran = false, interacted = false;
+    const on = (b) => b.getAttribute("aria-checked") === "true";
+    const say = (t) => { status.textContent = t; };
+    const qf = (q) => (0.25 + 0.75 * Math.pow(q / 100, 2.2)) / (0.25 + 0.75 * Math.pow(0.9, 2.2));
+    const fmtSize = (mb) => (mb >= 1 ? `${mb.toFixed(1)} MB` : `${Math.max(10, Math.round(mb * 100) * 10)} KB`);
+    const combined = () => fmt === "pdf" && on(sw.combine);
+    function outSize(s) {
+      let r = RATIO[fmt][s.kind];
+      if (LOSSY.includes(fmt)) r *= qf(quality);
+      if (on(sw.resize)) r *= Math.pow(Math.min(1, 2048 / s.px), 2) * 1.06;
+      return s.mb * r;
     }
 
-    function show(key) {
-      shown = key;
-      const F = key && FMT[key];
-      nameEl.textContent = F ? `IMG_2041.${F.ext}` : "IMG_2041.HEIC";
-      sizeEl.textContent = F ? F.size : "3.1 MB";
-      extEl.textContent = F ? F.label.toUpperCase() : "HEIC";
-      deltaEl.textContent = F ? F.delta : "";
-      deltaEl.classList.toggle("up", !!(F && F.up));
-      file.setAttribute("aria-label", F
-        ? `IMG_2041.${F.ext}, ${F.size}, converted. Press to send it back.`
-        : "IMG_2041.HEIC, 3.1 MB. Drag it onto Knack, or press to convert it.");
+    function tile(s) {
+      const li = document.createElement("li");
+      li.className = "ic-file";
+      li.innerHTML = `<span class="ic-thumb ${s.t}"><span class="ic-ring"><svg viewBox="0 0 34 34" aria-hidden="true"><circle cx="17" cy="17" r="14"/><circle cx="17" cy="17" r="14"/></svg></span><span class="ic-ok" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="#0b1a10" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="m6 12.5 4 4 8-8.5"/></svg></span></span><span class="ic-n"></span><span class="ic-m"><span class="ic-sz"></span><span class="ic-d" hidden></span></span>`;
+      li.src = s;
+      pending(li);
+      return li;
     }
-    function convertTo(key) {
-      clearTimeout(workT);
-      const F = FMT[key];
-      stage.classList.remove("working", "done");
-      const finish = () => {
-        stage.classList.remove("working");
-        stage.classList.add("done");
-        show(key);
-        say(`Saved IMG_2041.${F.ext} next to the original. ${F.note}`);
-      };
-      if (calm()) { finish(); return; }
-      void stage.offsetWidth;
-      stage.classList.add("working");
-      say(`Converting to ${F.label}…`);
-      workT = setTimeout(finish, 950);
+    function pending(li) {
+      const s = li.src;
+      li.classList.remove("working", "done");
+      $(".ic-n", li).textContent = `${s.base}.${s.ext}`;
+      $(".ic-sz", li).textContent = fmtSize(s.mb);
+      $(".ic-d", li).hidden = true;
     }
-    function settle(toZone, vx = 0, vy = 0) {
-      const was = parked;
-      parked = toZone;
-      stage.classList.remove("hot");
-      file.classList.remove("lifted");
-      stage.classList.toggle("parked", toZone);
-      const d = toZone ? lay.park : lay.home;
-      const sc = toZone ? lay.parkScale : 1;
-      if (calm()) { f.x.jump(d.x); f.y.jump(d.y); f.s.jump(sc); f.r.jump(0); paint(); }
-      else {
-        toZone ? tune(0.42, 0.62) : tune(0.45, 0.85);
-        f.x.to(d.x, vx); f.y.to(d.y, vy); f.s.to(sc); f.r.to(0);
-        go();
+    function finished(li, i) {
+      const s = li.src;
+      li.classList.remove("working");
+      li.classList.add("done");
+      const d = $(".ic-d", li);
+      if (combined()) {
+        $(".ic-n", li).textContent = `Page ${i + 1} of ${SRC[0].base}.pdf`;
+        $(".ic-sz", li).textContent = "";
+        d.hidden = true;
+        return;
       }
-      if (toZone && (!was || shown !== fmt)) convertTo(fmt);
-      if (!toZone) {
-        clearTimeout(workT);
-        stage.classList.remove("working", "done");
-        show(null);
-      }
+      const out = outSize(s);
+      const pct = Math.round((out / s.mb - 1) * 100);
+      $(".ic-n", li).textContent = `${s.base}.${EXT[fmt]}`;
+      $(".ic-sz", li).textContent = fmtSize(out);
+      d.textContent = (pct > 0 ? "+" : "−") + Math.abs(pct) + "%";
+      d.classList.toggle("up", pct > 0);
+      d.hidden = false;
     }
-
-    file.addEventListener("pointerdown", (e) => {
-      if (e.button !== 0) return;
-      interacted = true;
-      cancelDemo();
-      const p = local(e);
-      drag = { dx: p.x - f.x.x, dy: p.y - f.y.x, moved: false, start: p, hist: [{ ...p, t: e.timeStamp }] };
-      file.setPointerCapture(e.pointerId);
-      file.classList.add("dragging");
-    });
-    file.addEventListener("pointermove", (e) => {
-      if (!drag) return;
-      const p = local(e);
-      if (!drag.moved && Math.hypot(p.x - drag.start.x, p.y - drag.start.y) < 4) return;
-      if (!drag.moved) {
-        drag.moved = true;
-        file.classList.add("lifted");
-        tune(0.3, 0.75);
-        f.s.to(1.06);
-      }
-      drag.hist.push({ ...p, t: e.timeStamp });
-      if (drag.hist.length > 5) drag.hist.shift();
-      const h = drag.hist, a = h[0], b = h[h.length - 1], dt = Math.max(1, b.t - a.t) / 1000;
-      f.x.jump(p.x - drag.dx); f.y.jump(p.y - drag.dy);
-      f.r.to(clamp(((b.x - a.x) / dt) * 0.012, -12, 12) - 3);
-      stage.classList.toggle("hot", over(f.x.x, f.y.x));
-      paint();
-      go();
-    });
-    const end = (e) => {
-      if (!drag) return;
-      const d = drag;
-      drag = null;
-      file.classList.remove("dragging");
-      if (!d.moved) return;
-      const h = d.hist, a = h[0], b = h[h.length - 1], dt = Math.max(1, b.t - a.t) / 1000;
-      const fresh = e.timeStamp - b.t < 80;
-      const hit = over(f.x.x, f.y.x);
-      settle(hit, fresh ? (b.x - a.x) / dt : 0, fresh ? (b.y - a.y) / dt : 0);
-      if (!hit) say("Back in Downloads. Drop it on Knack to convert it.");
-      file.dataset.dragged = "1";
-      setTimeout(() => delete file.dataset.dragged, 0);
-    };
-    file.addEventListener("pointerup", end);
-    file.addEventListener("pointercancel", end);
-    file.addEventListener("click", () => {
-      if (file.dataset.dragged) return;
-      interacted = true;
-      cancelDemo();
-      if (parked) { settle(false); say("Back in Downloads, still a HEIC."); return; }
-      tune(0.45, 0.85);
-      f.s.to(1.06);
-      go();
-      timers.push(setTimeout(() => settle(true), calm() ? 0 : 180));
-    });
-    radioGroup(pills, (b) => {
-      fmt = b.dataset.fmt;
-      fmtEl.textContent = FMT[fmt].label;
-      if (parked) convertTo(fmt);
-      else say(`It will be saved as ${FMT[fmt].label}. Drag the photo onto Knack.`);
-    });
-    resetBtn.addEventListener("click", () => {
-      interacted = true;
-      cancelDemo();
-      settle(false);
-      say("Reset. Drag the photo onto Knack.");
-    });
-
-    function demo() {
-      if (demoed || interacted || calm()) return;
-      demoed = true;
-      const H = lay.home, P = lay.park;
-      const at = (ms, fn) => timers.push(setTimeout(fn, ms));
-      const move = (x, y, resp = 0.5) => { c.x.tune(resp, 0.9).to(x); c.y.tune(resp, 0.9).to(y); run({ springs: [c.x, c.y], render: paintCursor }); };
-      c.x.jump(H.x + 110); c.y.jump(H.y + 120); paintCursor();
-      cursor.classList.add("on");
-      say("Watch: drag, drop, done.");
-      move(H.x + 8, H.y - 6);
-      at(650, () => { file.classList.add("lifted"); tune(0.3, 0.75); f.s.to(1.06); go(); });
-      at(950, () => {
-        tune(0.6, 0.85);
-        const mx = (H.x + P.x) / 2, my = Math.min(H.y, P.y) - 40;
-        f.x.to(mx); f.y.to(my); f.r.to(-6); go();
-        move(mx + 8, my - 6, 0.6);
+    const addLi = document.createElement("li");
+    addLi.innerHTML = '<button type="button" class="ic-add"><b aria-hidden="true">+</b>Add</button>';
+    function render() {
+      list.innerHTML = "";
+      files.forEach((li) => list.appendChild(li));
+      list.appendChild(addLi);
+      const total = files.reduce((a, li) => a + li.src.mb, 0);
+      count.textContent = files.length ? `${files.length} images · ${total.toFixed(1)} MB` : "No files";
+      go.disabled = !files.length || running;
+    }
+    function reset() {
+      timers.forEach(clearTimeout);
+      timers = [];
+      running = false;
+      files.forEach(pending);
+      go.textContent = "Convert";
+      go.disabled = !files.length;
+    }
+    function summary() {
+      if (combined()) return `Saved ${SRC[0].base}.pdf with ${files.length} pages next to the originals.`;
+      const before = files.reduce((a, li) => a + li.src.mb, 0);
+      const after = files.reduce((a, li) => a + outSize(li.src), 0);
+      return `Saved ${files.length} ${LABEL[fmt]} copies next to the originals: ${fmtSize(before)} in, ${fmtSize(after)} out.`;
+    }
+    function convert() {
+      if (running || !files.length) return;
+      reset();
+      running = true;
+      ran = true;
+      go.textContent = "Converting…";
+      go.disabled = true;
+      say(`Converting ${files.length} images to ${LABEL[fmt]}…`);
+      const finish = () => { running = false; go.textContent = "Convert"; go.disabled = false; say(summary()); };
+      if (calm()) { files.forEach(finished); finish(); return; }
+      files.forEach((li, i) => {
+        timers.push(setTimeout(() => li.classList.add("working"), i * 280));
+        timers.push(setTimeout(() => finished(li, i), i * 280 + 950));
       });
-      at(1500, () => {
-        tune(0.45, 0.8);
-        f.x.to(P.x); f.y.to(P.y + 4); f.r.to(3); go();
-        move(P.x + 8, P.y - 2, 0.45);
-        stage.classList.add("hot");
-      });
-      at(2250, () => { settle(true); move(P.x + 60, P.y + 70, 0.6); });
-      at(3400, () => cursor.classList.remove("on"));
+      timers.push(setTimeout(finish, (files.length - 1) * 280 + 1000));
+    }
+    function changed(msg) {
+      interacted = true;
+      reset();
+      say(msg || `Press Convert to make ${LABEL[fmt]} copies.`);
+    }
+    function syncFormat() {
+      qBox.hidden = !LOSSY.includes(fmt);
+      pdfRow.hidden = fmt !== "pdf";
     }
 
-    fitStage();
-    show(null);
-    if (frozen) settle(true);
-    paint();
-    addEventListener("resize", fitStage);
-    watch(stage, () => {
-      if (calm()) { if (!interacted && !parked) settle(true); return; }
-      timers.push(setTimeout(demo, 600));
-    }, () => { if (!interacted && !demoed) cancelDemo(); }, 0.6);
+    radioGroup(fmts, (b) => { fmt = b.dataset.f; syncFormat(); changed(); });
+    range.addEventListener("input", () => {
+      quality = +range.value;
+      qv.textContent = quality + "%";
+      range.style.setProperty("--v", ((quality - 10) / 90) * 100 + "%");
+      changed();
+    });
+    Object.values(sw).forEach((b) => b.addEventListener("click", () => {
+      b.setAttribute("aria-checked", on(b) ? "false" : "true");
+      rs.textContent = on(sw.resize) ? "Longest side 2048 px" : "Off";
+      changed();
+    }));
+    go.addEventListener("click", () => { interacted = true; convert(); });
+    clear.addEventListener("click", () => {
+      interacted = true;
+      reset();
+      const gone = files;
+      files = [];
+      go.disabled = true;
+      count.textContent = "No files";
+      const done = () => { render(); say("Cleared. Press Add to bring the sample photos back."); };
+      if (calm()) { done(); return; }
+      gone.forEach((li) => li.classList.add("out"));
+      setTimeout(done, 260);
+    });
+    $("button", addLi).addEventListener("click", () => {
+      interacted = true;
+      if (files.length) { say("In Knack, Add opens a file picker. You can also drop images on the window."); return; }
+      files = SRC.map(tile);
+      render();
+      say(`Added 3 photos. Press Convert to make ${LABEL[fmt]} copies.`);
+    });
+
+    files = SRC.map(tile);
+    syncFormat();
+    render();
+    if (frozen) convert();
+    watch(ic, () => {
+      if (ran || interacted) return;
+      if (calm()) { convert(); return; }
+      setTimeout(() => { if (!ran && !interacted) convert(); }, 700);
+    }, null, 0.5);
   });
 
   $$('[data-stage="cutout"]').forEach((section) => {
@@ -524,14 +537,14 @@
       cut: '<span class="fi fi-cut"></span>',
       txt: '<span class="fi fi-txt"><i></i><i></i><i></i><i></i><em>TXT</em></span>'
     };
-    const IMAGE_TOOLS = [["Image Converter", "convert"], ["Image Compressor", "compress"], ["AI Background Remover", "cutout"], ["Image Upscaler", "upscale"], ["Text Extractor", "ocr"], ["Smart Crop", "crop"]];
-    const PDF_TOOLS = [["PDF Toolkit", "pdf"], ["Text Extractor", "ocr"], ["Image Converter", "convert"]];
+    const IMAGE_TOOLS = [["AI Background Remover", "cutout"], ["Image Converter", "convert"], ["Image Compressor", "compress"], ["Image Upscaler", "upscale"], ["Photo Enhance", "enhance"], ["Smart Crop", "crop"], ["Text Extractor", "ocr"], ["Colorize B&W", "colorize"], ["Document Scanner", "scan"], ["Face Restoration", "face"], ["Portrait Depth", "depth"], ["Color Palette", "palette"], ["App Icon Generator", "appicon"]];
+    const PDF_TOOLS = [["PDF Toolkit", "pdf"], ["Text Extractor", "ocr"]];
     const split = (name) => { const i = name.lastIndexOf("."); return [name.slice(0, i), name.slice(i + 1).toLowerCase()]; };
     const RESULT = {
-      cutout: (b) => ({ name: `${b}-cutout.png`, kind: "cut", msg: "with a transparent background" }),
-      compress: (b, e, k) => ({ name: `${b}-compressed.${e === "heic" ? "jpg" : e}`, kind: k, msg: "at a fraction of the size" }),
-      text: (b) => ({ name: `${b}.txt`, kind: "txt", msg: "with every line of text in it" }),
-      convert: (b, e, k) => ({ name: `${b}.${e === "jpg" ? "png" : "jpg"}`, kind: k, msg: "next to the original" })
+      cutout: (b) => ({ name: `${b}-cutout.png`, kind: "cut", tool: "AI Background Remover" }),
+      compress: (b, e, k) => ({ name: `${b}-compressed.${e === "heic" ? "jpg" : e}`, kind: k, tool: "Image Compressor" }),
+      text: (b) => ({ name: `${b}-ocr.txt`, kind: "txt", tool: "Text Extractor" }),
+      convert: (b, e, k) => ({ name: e === "png" ? `${b} (1).png` : `${b}.png`, kind: k, tool: "Image Converter" })
     };
     let target = null, inView = false, pausedUntil = 0, loop = 0, timers = [], scripting = false;
     const c = { x: new Spring(0), y: new Spring(0) };
@@ -543,9 +556,9 @@
 
     function select(btn) { files().forEach((f) => f.classList.toggle("sel", f === btn)); }
     function enableFor(btn) {
-      const isPdf = btn.dataset.kind === "pdf";
+      const kind = btn.dataset.kind;
       acts.forEach((a) => {
-        const ok = !isPdf || a.dataset.act === "text" || a.dataset.act === "open";
+        const ok = kind === "txt" ? false : kind === "pdf" ? a.dataset.act === "text" || a.dataset.act === "open" : true;
         a.disabled = !ok;
       });
     }
@@ -611,7 +624,7 @@
       if (!animate || calm()) $(".fd-file", li).style.animation = "none";
       src.closest("li").after(li);
       select(null);
-      say(`Saved ${r.name} ${r.msg}.`);
+      say(`Knack opened ${r.tool} and saved ${r.name}.`);
       return $(".fd-file", li);
     }
     function perform(act) {
@@ -621,11 +634,11 @@
       if (act === "open") { showPicker(src); return; }
       if (calm()) { addResult(src, act); return; }
       src.classList.add("busy");
-      say("Knack is on it…");
+      say(`Knack comes forward on ${RESULT[act]("", "", "").tool} and starts…`);
       timers.push(setTimeout(() => { src.classList.remove("busy"); addResult(src, act); }, 750));
     }
     function showPicker(src) {
-      const tools = src.dataset.kind === "pdf" ? PDF_TOOLS : src.dataset.kind === "txt" ? [["Text Extractor", "ocr"]] : IMAGE_TOOLS;
+      const tools = src.dataset.kind === "pdf" ? PDF_TOOLS : IMAGE_TOOLS;
       pickFile.textContent = src.dataset.name;
       pickList.innerHTML = "";
       tools.forEach(([name, g]) => {
@@ -759,83 +772,179 @@
   });
 
   $$('[data-stage="stats"]').forEach((section) => {
-    const mb = $(".mb", section);
-    const procsEl = $(".mb-procs", mb);
-    const line = $(".spark-line", mb), area = $(".spark-area", mb);
-    const memBar = $(".m-mem", mb);
-    const PROCS = [
+    const sb = $(".sb", section);
+    const itemsEl = $(".sb-items", sb);
+    const pop = $(".sb-pop", sb);
+    const popIn = $(".sb-pop-in", sb);
+    const status = $(".sb-status", section);
+    const styles = $$(".sb-styles .seg-b", section);
+    const M = [
+      { id: "cpu", label: "CPU", name: "CPU", icon: "cpu", w: 320, h: 460 },
+      { id: "mem", label: "MEM", name: "Memory", icon: "mem", w: 320, h: 560 },
+      { id: "down", label: "NET↓", name: "Net ↓", icon: "down", w: 320, h: 240 },
+      { id: "bat", label: "BAT", name: "Battery", icon: "bat", w: 300, h: 240 }
+    ];
+    const st = { cpu: 30, user: 18, sys: 12, perf: 41, eff: 22, mem: 64, down: 6.5, up: 0.42, bat: 84 };
+    const CPU_PROCS = [
       { n: "Safari", v: 9.4, c: "linear-gradient(#5ac8fa, #1a7cf0)" },
       { n: "Xcode", v: 6.1, c: "linear-gradient(#6aa8ff, #2f5fd8)" },
       { n: "WindowServer", v: 3.8, c: "linear-gradient(#a1a1aa, #5f5f68)" },
       { n: "Music", v: 2.2, c: "linear-gradient(#ff6a85, #f5264d)" },
       { n: "Knack", v: 1.1, img: "screenshots/icon.png" }
     ];
-    const st = { cpu: 23, mem: 61, down: 2.4, up: 180 };
-    let seed = 7;
+    const MEM_PROCS = [
+      { n: "Safari", v: 2.4, c: "linear-gradient(#5ac8fa, #1a7cf0)" },
+      { n: "Xcode", v: 1.9, c: "linear-gradient(#6aa8ff, #2f5fd8)" },
+      { n: "WindowServer", v: 0.64, c: "linear-gradient(#a1a1aa, #5f5f68)" },
+      { n: "Music", v: 0.41, c: "linear-gradient(#ff6a85, #f5264d)" },
+      { n: "Knack", v: 0.18, img: "screenshots/icon.png" }
+    ];
+    let seed = 11;
     const rnd = () => { seed = (seed * 16807) % 2147483647; return (seed - 1) / 2147483646; };
-    const hist = [];
-    for (let i = 0; i < 60; i++) hist.push(clamp(24 + Math.sin(i / 4.2) * 9 + Math.sin(i / 1.7) * 5 + (rnd() - 0.5) * 10, 4, 90));
-    hist[59] = st.cpu;
+    const series = (base, a, b, lo, hi) => Array.from({ length: 60 }, (_, i) => clamp(base + Math.sin(i / 4.2) * a + Math.sin(i / 1.7) * b + (rnd() - 0.5) * b * 2, lo, hi));
+    const H = { cpu: series(30, 9, 5, 4, 95), perf: series(40, 12, 6, 2, 98), eff: series(22, 6, 4, 2, 90), down: series(5.5, 2.2, 1.4, 0.2, 12), up: series(0.5, 0.2, 0.15, 0.05, 2) };
+    let style = "textRow", openId = null, user = false, inView = false, demoT = 0, demoI = 0, tickT = 0;
+    const say = (t) => { status.textContent = t; };
+    const pct = (v) => `${Math.round(v)}%`;
+    const rate = (mb) => (mb < 1 ? `${Math.round(mb * 1000)} KB/s` : `${mb.toFixed(1)} MB/s`);
+    const gb = (v) => (v < 1 ? `${Math.round(v * 1024)} MB` : `${v.toFixed(1)} GB`);
+    const value = (id) => (id === "cpu" ? pct(st.cpu) : id === "mem" ? pct(st.mem) : id === "down" ? rate(st.down) : pct(st.bat));
+    const icon = (p) => (p.img ? `<img class="pi" src="${p.img}" alt="" width="16" height="16" />` : `<span class="pi" style="background:${p.c}"></span>`);
+    const head = (m) => `<p class="pp-h">${glyph(m.icon)}${m.name}</p>`;
+    const bar = (label, v, color) => `<div class="pp-bar"><div><span>${label}</span><b>${pct(v)}</b></div><i><u style="width:${clamp(v, 0, 100).toFixed(1)}%;background:${color}"></u></i></div>`;
+    const kv = (k, v) => `<div class="pp-kv"><span>${k}</span><b>${v}</b></div>`;
+    function chart(list, colors, max) {
+      const pts = (h) => h.map((v, i) => `${(i * 288 / 59).toFixed(1)},${(42 - (v / max) * 38).toFixed(1)}`).join(" ");
+      const p0 = pts(list[0]);
+      let svgs = `<svg class="pp-chart" viewBox="0 0 288 44" preserveAspectRatio="none" aria-hidden="true"><defs><linearGradient id="pp-g" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="${colors[0]}" stop-opacity=".4"/><stop offset="1" stop-color="${colors[0]}" stop-opacity="0"/></linearGradient></defs><polygon fill="url(#pp-g)" points="0,44 ${p0} 288,44"/><polyline fill="none" stroke="${colors[0]}" stroke-width="1.8" stroke-linejoin="round" vector-effect="non-scaling-stroke" points="${p0}"/>`;
+      list.slice(1).forEach((h, i) => { svgs += `<polyline fill="none" stroke="${colors[i + 1]}" stroke-width="1.2" stroke-linejoin="round" vector-effect="non-scaling-stroke" points="${pts(h)}"/>`; });
+      return svgs + "</svg>";
+    }
+    function procs(arr, fmt) {
+      return [...arr].sort((a, b) => b.v - a.v).map((p) => `<div class="pp-row">${icon(p)}<span class="pn">${p.n}</span><span class="pv">${fmt(p.v)}</span></div>`).join("");
+    }
+    function build(m) {
+      if (m.id === "cpu") {
+        return head(m) + `<div class="pp-big">${pct(st.cpu)}</div>` + chart([H.cpu, H.perf, H.eff], ["#FF3D88", "#FF8C8C", "#66D98C"], 100) +
+          `<div class="pp-stats"><div><span class="pp-k">User</span><span class="pp-v" style="color:#6BB8FF">${pct(st.user)}</span></div><div><span class="pp-k">System</span><span class="pp-v" style="color:#FF8C6B">${pct(st.sys)}</span></div></div>` +
+          bar("Performance", st.perf, "#FF8C8C") + bar("Efficiency", st.eff, "#66D98C") +
+          `<div class="pp-div"></div><p class="pp-sec">TOP PROCESSES <span>by CPU</span></p>` + procs(CPU_PROCS, (v) => `${v.toFixed(1)}%`);
+      }
+      if (m.id === "mem") {
+        const used = 16 * st.mem / 100, cached = (16 - used) * 0.7;
+        return head(m) + `<div class="pp-big">${used.toFixed(1)} GB<small>/ 16 GB · ${pct(st.mem)}</small></div>` +
+          `<div class="pp-bar"><i><u style="width:${st.mem.toFixed(1)}%;background:#33D9D9"></u></i></div><div style="height:8px"></div>` +
+          kv("App", gb(used * 0.6)) + kv("Wired", gb(used * 0.22)) + kv("Compressed", gb(used * 0.18)) + kv("Cached Files", gb(cached)) + kv("Free", gb(16 - used - cached)) +
+          bar("Pressure", st.mem * 0.55, "#4DD98C") +
+          `<div class="pp-div"></div>` + kv("Page Ins", "1.4 GB") + kv("Page Outs", "0 bytes") + kv("Swap", "0 bytes") +
+          `<div class="pp-div"></div><p class="pp-sec">TOP PROCESSES <span>by memory</span></p>` + procs(MEM_PROCS, gb);
+      }
+      if (m.id === "down") {
+        return head(m) + `<div class="pp-net" style="color:#4DD98C">${glyph("down")}<span>Down</span><b>${rate(st.down)}</b></div><div class="pp-net" style="color:#5CA8FF">${glyph("up")}<span>Up</span><b>${rate(st.up)}</b></div>` +
+          chart([H.down, H.up], ["#4DD98C", "#5CA8FF"], 12);
+      }
+      return head(m) + `<div class="pp-big">${pct(st.bat)}</div>` + bar("Charge", st.bat, "var(--success)") + `<div style="height:8px"></div>` + kv("Power", "On battery") + kv("Remaining", "6:12");
+    }
 
-    PROCS.forEach((p, i) => {
-      const li = document.createElement("li");
-      li.innerHTML = `<span class="pi"></span><span class="pn"></span><span class="pb"><u></u></span><span class="pv"></span>`;
-      const pi = $(".pi", li);
-      if (p.img) pi.outerHTML = `<img class="pi" src="${p.img}" alt="" width="16" height="16" loading="lazy" />`;
-      else pi.style.background = p.c;
-      $(".pn", li).textContent = p.n;
-      p.el = li;
-      li.style.setProperty("--r", i);
-      procsEl.appendChild(li);
-    });
-    const fmtRate = (mbs) => (mbs < 1 ? `${Math.round(mbs * 1000)} KB/s` : `${mbs.toFixed(1)} MB/s`);
-    const setAll = (cls, t) => $$(cls, mb).forEach((el) => { el.textContent = t; });
-
-    function paint() {
-      setAll(".v-cpu", `${Math.round(st.cpu)}%`);
-      setAll(".v-mem", `${Math.round(st.mem)}%`);
-      setAll(".v-down", fmtRate(st.down));
-      setAll(".v-up", `${Math.round(st.up)} KB/s`);
-      setAll(".v-memgb", `${(16 * st.mem / 100).toFixed(1)} of 16 GB`);
-      memBar.style.width = `${st.mem.toFixed(1)}%`;
-      const pts = hist.map((v, i) => `${(i * 240 / 59).toFixed(1)},${(54 - v / 100 * 50).toFixed(1)}`).join(" ");
-      line.setAttribute("points", pts);
-      area.setAttribute("points", `0,56 ${pts} 240,56`);
-      const ranked = [...PROCS].sort((a, b) => b.v - a.v);
-      const top = Math.max(12, ranked[0].v);
-      ranked.forEach((p, r) => {
-        p.el.style.setProperty("--r", r);
-        $(".pb u", p.el).style.width = `${(p.v / top * 100).toFixed(1)}%`;
-        $(".pv", p.el).textContent = `${p.v.toFixed(1)}%`;
+    function updateItems() {
+      M.forEach((m) => {
+        if (!m.el) return;
+        $(".sb-v", m.el).textContent = value(m.id);
+        m.el.setAttribute("aria-label", `${m.name} ${value(m.id)}`);
+        m.el.classList.toggle("open", m.id === openId);
+        m.el.setAttribute("aria-expanded", m.id === openId ? "true" : "false");
       });
     }
-    function step() {
-      st.cpu = clamp(st.cpu + (Math.random() - 0.5) * 16 + (26 - st.cpu) * 0.18, 6, 78);
-      st.mem = clamp(st.mem + (Math.random() - 0.5) * 2.4 + (61 - st.mem) * 0.1, 52, 74);
-      st.down = clamp(st.down * Math.exp((Math.random() - 0.5) * 0.9) + (2.4 - st.down) * 0.08, 0.15, 9.8);
-      st.up = clamp(st.up * Math.exp((Math.random() - 0.5) * 0.8) + (180 - st.up) * 0.1, 30, 900);
-      PROCS.forEach((p) => { p.v = Math.max(0.2, p.v * Math.exp((Math.random() - 0.5) * 0.7)); });
-      const sum = PROCS.reduce((s, p) => s + p.v, 0), want = st.cpu * 0.82;
-      PROCS.forEach((p) => { p.v = p.v * want / sum; });
-      hist.shift();
-      hist.push(st.cpu);
-      paint();
+    function renderItems() {
+      itemsEl.classList.toggle("stack", style.endsWith("Stack"));
+      itemsEl.innerHTML = "";
+      M.forEach((m) => {
+        const b = document.createElement("button");
+        b.type = "button";
+        b.className = "sb-item";
+        b.setAttribute("aria-haspopup", "dialog");
+        b.innerHTML = (style.startsWith("icon") ? glyph(m.icon) : `<span class="sb-l">${m.label}</span>`) + '<span class="sb-v"></span>';
+        b.addEventListener("click", () => {
+          user = true;
+          clearTimeout(demoT);
+          if (openId === m.id) close(); else open(m.id);
+        });
+        itemsEl.appendChild(b);
+        m.el = b;
+      });
+      updateItems();
+      if (openId) place();
     }
-    paint();
-    let timer = 0, inView = false;
+    function place() {
+      const m = M.find((x) => x.id === openId);
+      const W = sb.clientWidth;
+      const w = Math.min(m.w, W - 16);
+      const a = m.el.getBoundingClientRect(), s = sb.getBoundingClientRect();
+      const cx = a.left - s.left + a.width / 2;
+      const left = clamp(cx - w / 2, 8, W - w - 8);
+      pop.style.setProperty("--w", w + "px");
+      pop.style.setProperty("--h", m.h + "px");
+      pop.style.setProperty("--ax", (cx - left) + "px");
+      pop.style.left = left + "px";
+    }
+    function open(id) {
+      const m = M.find((x) => x.id === id);
+      openId = id;
+      pop.hidden = false;
+      pop.setAttribute("aria-label", `${m.name} details`);
+      popIn.innerHTML = build(m);
+      place();
+      if (!calm()) { pop.classList.remove("enter"); void pop.offsetWidth; pop.classList.add("enter"); }
+      updateItems();
+      say(id === "cpu" ? "CPU: load, cores and the busiest processes." : id === "mem" ? "Memory: what is using it and how much pressure it is under." : id === "down" ? "Network: download and upload speed." : "Battery: charge and time remaining.");
+    }
+    function close() {
+      openId = null;
+      pop.hidden = true;
+      updateItems();
+      say("Click a menu bar item to open its detail.");
+    }
+    function demo() {
+      clearTimeout(demoT);
+      if (user || !inView || calm()) return;
+      if (!document.hidden) { open(["cpu", "mem", "down"][demoI % 3]); demoI++; }
+      demoT = setTimeout(demo, 2900);
+    }
+    function step() {
+      st.cpu = clamp(st.cpu + (Math.random() - 0.5) * 16 + (30 - st.cpu) * 0.18, 6, 80);
+      st.user = st.cpu * 0.6; st.sys = st.cpu * 0.4;
+      st.perf = clamp(st.cpu * 1.35 + (Math.random() - 0.5) * 8, 2, 99);
+      st.eff = clamp(st.cpu * 0.7 + (Math.random() - 0.5) * 8, 2, 95);
+      st.mem = clamp(st.mem + (Math.random() - 0.5) * 2.4 + (64 - st.mem) * 0.1, 54, 76);
+      st.down = clamp(st.down * Math.exp((Math.random() - 0.5) * 0.8) + (6.5 - st.down) * 0.08, 0.15, 12);
+      st.up = clamp(st.up * Math.exp((Math.random() - 0.5) * 0.8) + (0.42 - st.up) * 0.1, 0.03, 2);
+      st.bat = clamp(st.bat - 0.02, 5, 100);
+      CPU_PROCS.forEach((p) => { p.v = Math.max(0.2, p.v * Math.exp((Math.random() - 0.5) * 0.7)); });
+      const sum = CPU_PROCS.reduce((a, p) => a + p.v, 0);
+      CPU_PROCS.forEach((p) => { p.v = p.v * st.cpu * 0.8 / sum; });
+      [["cpu", st.cpu], ["perf", st.perf], ["eff", st.eff], ["down", st.down], ["up", st.up]].forEach(([k, v]) => { H[k].shift(); H[k].push(v); });
+      updateItems();
+      if (openId) popIn.innerHTML = build(M.find((x) => x.id === openId));
+    }
     const tick = () => {
       if (!inView || calm()) return;
       if (!document.hidden) step();
-      timer = setTimeout(tick, 1000);
+      tickT = setTimeout(tick, 1000);
     };
-    watch(mb, () => {
+
+    radioGroup(styles, (b) => { style = b.dataset.style; renderItems(); say(`${b.textContent}. The same style applies to every item.`); });
+    sb.addEventListener("keydown", (e) => { if (e.key === "Escape" && openId) { const m = M.find((x) => x.id === openId); close(); m.el.focus(); } });
+    addEventListener("resize", () => { if (openId) place(); });
+    renderItems();
+    if (calm()) open("cpu");
+    watch(sb, () => {
       if (inView) return;
       inView = true;
       if (calm()) return;
-      mb.classList.add("ticking");
-      clearTimeout(timer);
-      timer = setTimeout(tick, 600);
-    }, () => { inView = false; mb.classList.remove("ticking"); clearTimeout(timer); }, 0.2);
+      clearTimeout(tickT);
+      tickT = setTimeout(tick, 800);
+      demoT = setTimeout(demo, 600);
+    }, () => { inView = false; clearTimeout(tickT); clearTimeout(demoT); }, 0.3);
   });
 
   $$('[data-stage="tidy"]').forEach((section) => {
@@ -845,20 +954,25 @@
     const status = $(".td-status", section);
     const count = $(".td-count", section);
     const badge = status.querySelector(".tier");
-    const FOLDERS = ["Images", "Documents", "Installers", "Archives", "Music"];
+    const modeBtns = $$(".td-modes .seg-b", section);
+    const MODES = {
+      type: { key: "g", folders: ["Images", "Documents", "Apps & Installers", "Archives", "Audio"] },
+      month: { key: "m", folders: ["2026-08", "2026-09", "2026-10"] },
+      size: { key: "z", folders: ["Small (<1 MB)", "Medium (1–25 MB)", "Large (25 MB+)"] }
+    };
     const FILES = [
-      { n: "Screenshot 09.41.png", k: "shot", g: 0 },
-      { n: "Invoice-0931.pdf", k: "pdf", g: 1 },
-      { n: "Figma.dmg", k: "dmg", g: 2 },
-      { n: "IMG_3381.jpg", k: "beach", g: 0 },
-      { n: "photos.zip", k: "zip", g: 3 },
-      { n: "Midnight.mp3", k: "song", g: 4 },
-      { n: "Brief.docx", k: "doc", g: 1 },
-      { n: "Banner.png", k: "poster", g: 0 },
-      { n: "Docker.dmg", k: "dmg", g: 2 },
-      { n: "Notes.pdf", k: "pdf", g: 1 },
-      { n: "backup.zip", k: "zip", g: 3 },
-      { n: "Screenshot 10.02.png", k: "shot", g: 0 }
+      { n: "Screenshot 09.41.png", k: "shot", g: 0, m: 2, z: 1 },
+      { n: "Invoice-0931.pdf", k: "pdf", g: 1, m: 1, z: 0 },
+      { n: "Figma.dmg", k: "dmg", g: 2, m: 0, z: 2 },
+      { n: "IMG_3381.jpg", k: "beach", g: 0, m: 2, z: 1 },
+      { n: "photos.zip", k: "zip", g: 3, m: 1, z: 2 },
+      { n: "Midnight.mp3", k: "song", g: 4, m: 0, z: 1 },
+      { n: "Brief.docx", k: "doc", g: 1, m: 2, z: 0 },
+      { n: "Banner.png", k: "poster", g: 0, m: 1, z: 1 },
+      { n: "Docker.dmg", k: "dmg", g: 2, m: 2, z: 2 },
+      { n: "Notes.pdf", k: "pdf", g: 1, m: 1, z: 0 },
+      { n: "backup.zip", k: "zip", g: 3, m: 0, z: 2 },
+      { n: "Screenshot 10.02.png", k: "shot", g: 0, m: 2, z: 0 }
     ];
     const ROT = [-4, 3, 0, 5, -3, 4, -5, 2, -2, 3, 6, -4];
     const JIT = [[1, -3], [-2, 4], [2, -1], [-1, 3], [2, 2], [-2, -3], [1, 3], [-2, -2], [2, 3], [-1, -4], [1, 2], [-2, 1]];
@@ -872,8 +986,7 @@
       zip: '<span class="fi fi-zip"></span>',
       song: '<span class="fi fi-song"></span>'
     };
-    const totals = FOLDERS.map((_, g) => FILES.filter((f) => f.g === g).length);
-    let sorted = false, played = false, interacted = false, narrow = null, timers = [];
+    let mode = "type", applied = false, played = false, interacted = false, narrow = null;
 
     const fileEls = FILES.map((f) => {
       const el = document.createElement("div");
@@ -883,60 +996,53 @@
       desk.appendChild(el);
       return el;
     });
-    const folderEls = FOLDERS.map((name) => {
+    const folderEls = [0, 1, 2, 3, 4].map(() => {
       const el = document.createElement("div");
       el.className = "tfo";
-      el.innerHTML = `<span class="fold"><b>0</b></span><span class="fd-n"></span>`;
-      $(".fd-n", el).textContent = name;
+      el.innerHTML = '<span class="fold"><b>0</b></span><span class="fd-n"></span>';
       desk.appendChild(el);
       return el;
     });
 
-    function spots() {
-      const n = desk.clientWidth < 560;
-      const cols = n ? 3 : 6, rows = n ? 4 : 2;
-      const scatter = FILES.map((_, i) => {
-        const cx = i % cols, cy = Math.floor(i / cols);
-        const x = (cx + 0.5) / cols * 100 + JIT[i][0] * (n ? 1 : 1.4);
-        const y = n ? 14 + cy * 23 + JIT[i][1] : (cy === 0 ? 28 : 72) + JIT[i][1] * 1.5;
-        return [x, y];
-      });
-      const homes = n
-        ? [[20, 30], [50, 30], [80, 30], [35, 68], [65, 68]]
-        : [[14, 50], [32, 50], [50, 50], [68, 50], [86, 50]];
-      return { n, scatter, homes };
+    function homes(n, small) {
+      if (small && n === 5) return [[20, 30], [50, 30], [80, 30], [35, 70], [65, 70]];
+      if (small) return [[20, 46], [50, 46], [80, 46]];
+      const step = n === 5 ? 19 : 25;
+      return Array.from({ length: n }, (_, i) => [50 + (i - (n - 1) / 2) * step, 50]);
     }
     function layout(animate) {
-      const L = spots();
-      narrow = L.n;
+      const small = desk.clientWidth < 560;
+      narrow = small;
+      const M = MODES[mode];
+      const nF = M.folders.length;
+      const spots = homes(nF, small);
+      const cols = small ? 3 : 6;
       const quick = !animate || calm();
       fileEls.forEach((el, i) => {
         const f = FILES[i];
-        const [x, y] = sorted ? L.homes[f.g] : L.scatter[i];
+        const cx = i % cols, cy = Math.floor(i / cols);
+        const sx = (cx + 0.5) / cols * 100 + JIT[i][0] * (small ? 1 : 1.4);
+        const sy = small ? 14 + cy * 23 + JIT[i][1] : (cy === 0 ? 26 : 74) + JIT[i][1] * 1.5;
+        const [x, y] = applied ? spots[f[M.key]] : [sx, sy];
         el.style.setProperty("--x", x.toFixed(2));
         el.style.setProperty("--y", y.toFixed(2));
-        el.style.setProperty("--rot", sorted ? "0deg" : ROT[i] + "deg");
-        el.style.setProperty("--sc", sorted ? 0.3 : 1);
-        el.style.setProperty("--dl", quick ? "0s" : (sorted ? 0.22 + i * 0.05 : i * 0.03) + "s");
-        el.classList.toggle("gone", sorted);
+        el.style.setProperty("--rot", applied ? "0deg" : ROT[i] + "deg");
+        el.style.setProperty("--sc", applied ? 0.3 : 1);
+        el.style.setProperty("--dl", quick ? "0s" : (applied ? 0.1 + i * 0.05 : i * 0.03) + "s");
+        el.classList.toggle("gone", applied);
       });
       folderEls.forEach((el, g) => {
-        const [x, y] = L.homes[g];
+        const used = g < nF;
+        const [x, y] = used ? spots[g] : [50, 50];
         el.style.setProperty("--x", x);
         el.style.setProperty("--y", y);
-        el.style.setProperty("--dl", quick ? "0s" : (sorted ? g * 0.06 : 0.3 + g * 0.04) + "s");
-        el.classList.toggle("on", sorted);
-      });
-    }
-    function counts(animate) {
-      timers.forEach(clearTimeout);
-      timers = [];
-      const nums = folderEls.map((el) => $(".fold b", el));
-      if (!sorted) { nums.forEach((b) => { b.textContent = "0"; }); return; }
-      if (!animate || calm()) { nums.forEach((b, g) => { b.textContent = totals[g]; }); return; }
-      const got = FOLDERS.map(() => 0);
-      FILES.forEach((f, i) => {
-        timers.push(setTimeout(() => { got[f.g]++; nums[f.g].textContent = got[f.g]; }, (0.22 + i * 0.05 + 0.38) * 1000));
+        el.style.setProperty("--dl", quick ? "0s" : g * 0.05 + "s");
+        el.classList.toggle("plan", used && !applied);
+        el.classList.toggle("on", used && applied);
+        if (used) {
+          $(".fd-n", el).textContent = M.folders[g];
+          $(".fold b", el).textContent = FILES.filter((f) => f[M.key] === g).length;
+        }
       });
     }
     function say(t) {
@@ -944,28 +1050,45 @@
       if (badge) status.append(badge, " ");
       status.append(t);
     }
-    function apply(on, animate = true) {
-      sorted = on;
+    function sync(msg) {
+      const nF = MODES[mode].folders.length;
+      go.disabled = applied;
+      undo.disabled = !applied;
+      modeBtns.forEach((b) => { b.disabled = applied; });
+      count.textContent = applied ? `${nF} folders` : "Preview · 12 moves · 2.2 GB";
+      say(msg || (applied ? `Moved 12 files into ${nF} folders. Undo puts every one back.` : `Preview · 12 moves into ${nF} folders. Nothing has moved yet.`));
+    }
+    function apply(on, animate = true, msg) {
+      applied = on;
       layout(animate);
-      counts(animate);
-      go.disabled = on;
-      undo.disabled = !on;
-      count.textContent = on ? "5 folders" : "12 items";
-      say(on ? "12 files sorted into 5 folders by type. Undo puts every one back." : "Back where they were. Nothing lost.");
+      sync(msg);
     }
 
+    radioGroup(modeBtns, (b) => {
+      interacted = true;
+      mode = b.dataset.mode;
+      layout(true);
+      sync();
+    });
     go.addEventListener("click", () => { interacted = true; apply(true); undo.focus({ preventScroll: true }); });
-    undo.addEventListener("click", () => { interacted = true; apply(false); go.focus({ preventScroll: true }); });
+    undo.addEventListener("click", () => { interacted = true; apply(false, true, "Undone. Every file is back where it was."); go.focus({ preventScroll: true }); });
     addEventListener("resize", () => { if ((desk.clientWidth < 560) !== narrow) layout(false); });
 
     layout(false);
+    sync();
     if (frozen) apply(true, false);
     watch(desk, () => {
       if (played || interacted) return;
       played = true;
       if (calm()) { apply(true, false); return; }
-      setTimeout(() => { if (!interacted) apply(true); }, 700);
+      setTimeout(() => { if (!interacted) apply(true); }, 1400);
     }, null, 0.5);
+  });
+
+  $$(".tool-grid .feature-card").forEach((card) => {
+    const name = card.querySelector("h3").firstChild.textContent.trim();
+    const t = TOOLS.find((x) => x.title === name);
+    if (t) card.style.setProperty("--tc", t.color);
   });
 
   $$(".tools-filter").forEach((group) => {

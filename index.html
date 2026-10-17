@@ -9,7 +9,7 @@
   <link rel="icon" type="image/png" href="screenshots/icon.png" />
   <link rel="apple-touch-icon" href="screenshots/icon.png" />
   <link rel="stylesheet" href="stage.css?v=c7890734" />
-  <link rel="stylesheet" href="knack.css?v=d93d0d41" />
+  <link rel="stylesheet" href="knack.css?v=85933420" />
   <meta property="og:type" content="website" />
   <meta property="og:url" content="https://knack.coursion.studio/" />
   <meta property="og:title" content="Knack — 20+ native Mac tools in one app" />
@@ -39,42 +39,39 @@
       download: "https://apps.apple.com/app/id6762058455",
       palette: "aurora",
       launcher: {
-        label: "Knack",
         demo: "heic",
-        kind: "Tool",
-        open: "Open",
-        opened: function (t) { return "In Knack, " + t + " opens now"; },
-        empty: "No tool by that name. Try “pdf” or “video”.",
+        opened: function (t) { return "In Knack, " + t + " opens"; },
+        empty: "No tools match. Try “pdf” or “video”.",
         items: [
-          { title: "Image Converter", sub: "Free · Image", glyph: "convert", keys: "heic png jpg jpeg webp tiff gif bmp convert resize format photo image" },
-          { title: "Image Compressor", sub: "Free · Image", glyph: "compress", keys: "compress shrink smaller size optimise optimize png jpeg jpg image" },
-          { title: "Image Upscaler", sub: "Free · Image", glyph: "upscale", keys: "upscale enlarge bigger 2x 4x resolution image" },
-          { title: "Photo Enhance", sub: "Free · Photo", glyph: "enhance", keys: "denoise sharpen noise grain enhance fix photo" },
-          { title: "Face Restoration", sub: "Free · Photo", glyph: "face", keys: "face portrait restore old blurry photo" },
-          { title: "Color Palette", sub: "Free · Colour", glyph: "palette", keys: "colour color palette swatch hex dominant" },
-          { title: "Color Picker", sub: "Free · Colour", glyph: "picker", keys: "colour color pick eyedropper hex rgb screen pixel" },
-          { title: "QR Code Generator", sub: "Free · Utility", glyph: "qr", keys: "qr code link url wifi" },
-          { title: "Video Converter", sub: "Free · Video", glyph: "video", keys: "video mp4 mov hevc h264 convert movie" },
-          { title: "Audio Converter", sub: "Free · Audio", glyph: "audio", keys: "audio mp3 wav aiff caf m4a sound soundtrack music convert" },
-          { title: "Cleaning Lock", sub: "Free · System", glyph: "lock", keys: "clean lock keyboard trackpad wipe" },
-          { title: "AI Background Remover", sub: "Pro · Image", glyph: "cutout", keys: "background bg remove cutout transparent subject" },
-          { title: "Smart Crop", sub: "Pro · Photo", glyph: "crop", keys: "crop instagram social ratio square" },
-          { title: "Document Scanner", sub: "Pro · PDF", glyph: "scan", keys: "scan scanner receipt document deskew pdf" },
-          { title: "Portrait Depth", sub: "Pro · Photo", glyph: "depth", keys: "portrait depth blur bokeh relight" },
-          { title: "Colorize B&W", sub: "Pro · Photo", glyph: "colorize", keys: "colorize colourise colour color black white bw old" },
-          { title: "Transcribe", sub: "Pro · Audio", glyph: "transcribe", keys: "transcribe whisper speech text srt vtt subtitles captions audio" },
-          { title: "App Store Screenshots", sub: "Pro · Design", glyph: "shots", keys: "app store screenshots marketing aso" },
-          { title: "App Icon Generator", sub: "Pro · Design", glyph: "appicon", keys: "icon icns favicon android ios app" },
-          { title: "PDF Toolkit", sub: "Pro · PDF", glyph: "pdf", keys: "pdf merge split combine extract compress pages" },
-          { title: "Text Extractor", sub: "Pro · Text", glyph: "ocr", keys: "ocr text extract read copy scan pdf" },
-          { title: "Tidy Folders", sub: "Pro · Files", glyph: "tidy", keys: "tidy sort organise organize folder downloads clean files" },
-          { title: "System Stats", sub: "Pro · System", glyph: "stats", keys: "cpu memory ram stats monitor menu bar battery network disk" }
+          { title: "Image Converter", glyph: "convert", color: "#5CA8FF", tier: "free", cats: ["image"], tagline: "Convert format, resize, and combine images", keys: "heic png jpg jpeg webp tiff gif bmp convert resize format photo image" },
+          { title: "Image Compressor", glyph: "compress", color: "#5CA8FF", tier: "free", cats: ["image"], tagline: "Shrink PNGs and JPEGs losslessly or with smart compression", keys: "compress shrink smaller size optimise optimize png jpeg jpg image" },
+          { title: "PDF Toolkit", glyph: "pdf", color: "#26C7AD", tier: "pro", cats: ["pdf"], tagline: "Merge, split, extract, and compress PDFs", keys: "pdf merge split combine extract compress pages" },
+          { title: "Text Extractor", glyph: "ocr", color: "#5CA8FF", tier: "pro", cats: ["pdf", "image"], tagline: "Extract text from images and PDFs on-device", keys: "ocr text extract read copy scan pdf" },
+          { title: "Color Palette", glyph: "palette", color: "#5CA8FF", tier: "free", cats: ["image"], tagline: "Pull dominant colours from any image", keys: "colour color palette swatch hex dominant" },
+          { title: "Color Picker", glyph: "picker", color: "#33D9D9", tier: "free", cats: ["utility", "image"], tagline: "Pick exact colours from pixels or anywhere on screen", keys: "colour color pick eyedropper hex rgb screen pixel" },
+          { title: "QR Code Generator", glyph: "qr", color: "#33D9D9", tier: "free", cats: ["utility"], tagline: "Make QR codes for URLs, Wi-Fi, and text", keys: "qr code link url wifi" },
+          { title: "Video Converter", glyph: "video", color: "#9E6BFF", tier: "free", cats: ["video"], tagline: "Re-encode to MP4, HEVC or MOV, or extract the audio", keys: "video mp4 mov hevc h264 convert movie" },
+          { title: "Audio Converter", glyph: "audio", color: "#4DD98C", tier: "free", cats: ["audio"], tagline: "Convert audio (or a video's soundtrack) to M4A, WAV, AIFF, or CAF", keys: "audio mp3 wav aiff caf m4a sound soundtrack music convert" },
+          { title: "App Icon Generator", glyph: "appicon", color: "#6185FF", tier: "pro", cats: ["image"], tagline: "One image → macOS, iOS, Android and web icon sets", keys: "icon icns favicon android ios app" },
+          { title: "AI Background Remover", glyph: "cutout", color: "#75D199", tier: "pro", cats: ["ai", "image"], tagline: "Cut out the subject with on-device AI", keys: "background bg remove cutout transparent subject" },
+          { title: "Image Upscaler", glyph: "upscale", color: "#A87AFF", tier: "free", cats: ["ai", "image"], tagline: "Upscale photos 2×/4× with a neural model", keys: "upscale enlarge bigger 2x 4x resolution image" },
+          { title: "Photo Enhance", glyph: "enhance", color: "#A87AFF", tier: "free", cats: ["ai", "image"], tagline: "Denoise and sharpen photos in one pass", keys: "denoise sharpen noise grain enhance fix photo" },
+          { title: "Smart Crop", glyph: "crop", color: "#FFB847", tier: "pro", cats: ["ai", "image"], tagline: "Auto-crop to social ratios using saliency", keys: "crop instagram social ratio square" },
+          { title: "Face Restoration", glyph: "face", color: "#A87AFF", tier: "free", cats: ["ai", "image"], tagline: "Bring back detail in old or blurry portraits", keys: "face portrait restore old blurry photo" },
+          { title: "Document Scanner", glyph: "scan", color: "#FF8052", tier: "pro", cats: ["ai", "pdf", "image"], tagline: "Auto-crop, deskew and remove shadows, then merge into one PDF", keys: "scan scanner receipt document deskew pdf" },
+          { title: "Portrait Depth", glyph: "depth", color: "#9E6BFF", tier: "pro", cats: ["ai", "image"], tagline: "Background blur and relight from a depth estimate", keys: "portrait depth blur bokeh relight" },
+          { title: "Colorize B&W", glyph: "colorize", color: "#FF85B8", tier: "pro", cats: ["ai", "image"], tagline: "Bring black & white photos back to life", keys: "colorize colourise colour color black white bw old" },
+          { title: "Transcribe", glyph: "transcribe", color: "#33CCD9", tier: "pro", cats: ["ai", "audio"], tagline: "Audio → text, SRT, or VTT on-device", keys: "transcribe whisper speech text srt vtt subtitles captions audio" },
+          { title: "App Store Screenshots", glyph: "shots", color: "#FFCC59", tier: "pro", cats: ["image", "utility"], tagline: "Marketing screenshots for the App Store", keys: "app store screenshots marketing aso" },
+          { title: "Tidy Folders", glyph: "tidy", color: "#FFB847", tier: "pro", cats: ["productivity", "utility"], tagline: "Sort a folder by type, date, or size with a one-click undo", keys: "tidy sort organise organize folder downloads clean files" },
+          { title: "Cleaning Lock", glyph: "lock", color: "#33D9D9", tier: "free", cats: ["utility", "productivity"], tagline: "Lock keyboard and trackpad while you wipe them down", keys: "clean lock keyboard trackpad wipe" },
+          { title: "System Stats", glyph: "stats", color: "#8CF2C7", tier: "pro", cats: ["utility"], tagline: "Live CPU, memory, network, disk, and battery in your menu bar", keys: "cpu memory ram stats monitor menu bar battery network disk" }
         ]
       }
     };
   </script>
   <script defer src="stage.js?v=b4de68b6"></script>
-  <script defer src="knack.js?v=98d703de"></script>
+  <script defer src="knack.js?v=28a6209a"></script>
   <script defer src="https://polaris-backend-489776622782.europe-west1.run.app/api/v1/analytics/t.js" data-site="knack.coursion.studio"></script>
 </head>
 <body>
@@ -107,7 +104,12 @@
     <symbol id="g-search" viewBox="0 0 24 24"><circle cx="11" cy="11" r="6.5"/><path d="m16 16 4 4"/></symbol>
     <symbol id="g-finder" viewBox="0 0 24 24"><rect x="3.5" y="4.5" width="17" height="13" rx="2.5"/><path d="M3.5 8.5h17"/><path d="M13 12.5v8l2-1.8 1.3 3 1.3-.6-1.3-2.9h2.7z" fill="currentColor"/></symbol>
     <symbol id="g-get" viewBox="0 0 24 24"><path d="M12 4v11M7.5 10.5 12 15l4.5-4.5M5 19.5h14"/></symbol>
-    <symbol id="g-calc" viewBox="0 0 24 24"><rect x="5" y="3.5" width="14" height="17" rx="2.5"/><path d="M8.5 7.5h7M8.5 12h.01M12 12h.01M15.5 12h.01M8.5 16h.01M12 16h.01M15.5 16h.01"/></symbol>
+    <symbol id="g-cpu" viewBox="0 0 24 24"><rect x="6" y="6" width="12" height="12" rx="2"/><rect x="9.5" y="9.5" width="5" height="5" rx="1"/><path d="M9 3v3M15 3v3M9 18v3M15 18v3M3 9h3M3 15h3M18 9h3M18 15h3"/></symbol>
+    <symbol id="g-mem" viewBox="0 0 24 24"><rect x="3" y="7" width="18" height="10" rx="1.5"/><path d="M7 10.5v3M10.5 10.5v3M14 10.5v3M17.5 10.5v3M6 17v2.5M18 17v2.5"/></symbol>
+    <symbol id="g-down" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5"/><path d="M12 7.5v9m0 0-3.5-3.5M12 16.5l3.5-3.5"/></symbol>
+    <symbol id="g-up" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5"/><path d="M12 16.5v-9m0 0-3.5 3.5M12 7.5l3.5 3.5"/></symbol>
+    <symbol id="g-bat" viewBox="0 0 24 24"><rect x="2.5" y="7.5" width="17" height="9" rx="2.5"/><path d="M22 10.5v3"/><rect x="5" y="10" width="9" height="4" rx="1" fill="currentColor" stroke="none"/></symbol>
+    <symbol id="g-folder" viewBox="0 0 24 24"><path d="M3.5 7.5a2 2 0 0 1 2-2h4l2 2h7a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2h-13a2 2 0 0 1-2-2z"/></symbol>
   </svg>
 
   <div class="kbar">
@@ -137,14 +139,14 @@
 
       <div class="fan" role="img" aria-label="The Knack app icon with eight of its tools fanned out beneath it: AI Background Remover, Image Converter, PDF Toolkit, Text Extractor, Image Compressor, Transcribe, System Stats and Tidy Folders.">
         <img class="fan-icon" src="screenshots/icon.png" alt="" width="160" height="160" fetchpriority="high" />
-        <span class="fan-item"><span class="tile"><svg><use href="#g-cutout"/></svg></span><b>Cutout</b></span>
-        <span class="fan-item"><span class="tile"><svg><use href="#g-convert"/></svg></span><b>Converter</b></span>
-        <span class="fan-item"><span class="tile"><svg><use href="#g-pdf"/></svg></span><b>PDF Toolkit</b></span>
-        <span class="fan-item"><span class="tile"><svg><use href="#g-ocr"/></svg></span><b>Text Extractor</b></span>
-        <span class="fan-item"><span class="tile"><svg><use href="#g-compress"/></svg></span><b>Compressor</b></span>
-        <span class="fan-item"><span class="tile"><svg><use href="#g-transcribe"/></svg></span><b>Transcribe</b></span>
-        <span class="fan-item"><span class="tile"><svg><use href="#g-stats"/></svg></span><b>System Stats</b></span>
-        <span class="fan-item"><span class="tile"><svg><use href="#g-tidy"/></svg></span><b>Tidy Folders</b></span>
+        <span class="fan-item" style="--tc:#75D199"><span class="tile"><svg><use href="#g-cutout"/></svg></span><b>Cutout</b></span>
+        <span class="fan-item" style="--tc:#5CA8FF"><span class="tile"><svg><use href="#g-convert"/></svg></span><b>Converter</b></span>
+        <span class="fan-item" style="--tc:#26C7AD"><span class="tile"><svg><use href="#g-pdf"/></svg></span><b>PDF Toolkit</b></span>
+        <span class="fan-item" style="--tc:#8E7BFF"><span class="tile"><svg><use href="#g-ocr"/></svg></span><b>Text Extractor</b></span>
+        <span class="fan-item" style="--tc:#FFB847"><span class="tile"><svg><use href="#g-compress"/></svg></span><b>Compressor</b></span>
+        <span class="fan-item" style="--tc:#33CCD9"><span class="tile"><svg><use href="#g-transcribe"/></svg></span><b>Transcribe</b></span>
+        <span class="fan-item" style="--tc:#8CF2C7"><span class="tile"><svg><use href="#g-stats"/></svg></span><b>System Stats</b></span>
+        <span class="fan-item" style="--tc:#FF8052"><span class="tile"><svg><use href="#g-tidy"/></svg></span><b>Tidy Folders</b></span>
       </div>
 
       <div class="hero-copy">
@@ -160,34 +162,32 @@
   </header>
 
   <main>
-    <section id="find" class="sec reveal" aria-labelledby="find-title">
+    <section id="find" class="sec reveal" data-stage="home-search" aria-labelledby="find-title">
       <div class="glow" aria-hidden="true"></div>
       <div class="container">
-        <div class="lp lp-live rise" data-stage="tools-launcher">
-          <div class="lp-field">
-            <svg class="lp-glass" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M16 16l5 5"/></svg>
-            <input class="lp-input" type="text" role="combobox" aria-expanded="true" aria-controls="find-results" aria-autocomplete="list" aria-label="Try Knack's search: type a file type, a job or a tool name" placeholder="Search tools: heic, pdf, background…" autocomplete="off" autocapitalize="off" spellcheck="false" />
-            <span class="lp-chip" aria-hidden="true">⌘F</span>
+        <div class="hw rise">
+          <div class="hw-top" aria-hidden="true"><i></i><i></i><i></i></div>
+          <div class="hw-head"><img src="screenshots/icon.png" alt="" width="52" height="52" loading="lazy" /><div><b>Knack</b><span>20+ native tools for images, PDFs, audio and video — all on-device</span></div></div>
+          <div class="hw-search">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="6.5"/><path d="m16 16 4 4"/></svg>
+            <input class="hw-input" type="search" placeholder="Search tools" aria-label="Search Knack's tools" aria-controls="hw-grid" autocomplete="off" autocapitalize="off" spellcheck="false" />
+            <kbd class="hw-k" aria-hidden="true">⌘F</kbd>
           </div>
-          <div class="lp-results">
-            <span class="lp-sel" aria-hidden="true"></span>
-            <ul id="find-results" class="lp-list" role="listbox" aria-label="Tools"></ul>
-            <p class="lp-empty">Start typing. Every tool answers at once.</p>
-          </div>
-          <div class="lp-foot">
-            <span class="lp-label" aria-live="polite">Knack</span>
-            <span class="lp-hint"><span class="lp-verb">Open</span><b>↩</b></span>
-            <span class="lp-hint">Move<b>↑↓</b></span>
+          <div class="hw-cats" role="radiogroup" aria-label="Category"></div>
+          <div class="hw-scroll">
+            <ul class="hw-grid" id="hw-grid" aria-label="Tools"></ul>
+            <p class="hw-empty" hidden></p>
           </div>
         </div>
+        <p class="stage-status hw-status" aria-live="polite">23 tools. Type to filter, or pick a category.</p>
         <div class="sec-head center">
           <h2 id="find-title" class="rise" style="--d:.08s">Find any tool by typing</h2>
-          <p class="rise" style="--d:.14s">Knack's home screen has one search field, and it knows every tool. Type a file type, a job or a name, and the right tool is first.</p>
+          <p class="rise" style="--d:.14s">Knack's Home window opens on a search field above every tool. Type a file type, a job or a name and the grid narrows as you type, or pick a category: AI, Image, PDF, Audio, Video, Utility or Productivity.</p>
           <div class="chips rise" style="--d:.2s">
             <button type="button" class="chip-q" data-q="heic">heic</button>
             <button type="button" class="chip-q" data-q="pdf">pdf</button>
             <button type="button" class="chip-q" data-q="background">background</button>
-            <button type="button" class="chip-q" data-q="1280*0.15">1280*0.15</button>
+            <button type="button" class="chip-q" data-q="video">video</button>
           </div>
         </div>
       </div>
@@ -197,40 +197,48 @@
       <div class="glow" aria-hidden="true"></div>
       <div class="container split">
         <div class="split-copy">
-          <h2 id="convert-title" class="rise">Drop a file, get the format you need</h2>
-          <p class="rise" style="--d:.06s">Image Converter reads PNG, JPEG, HEIC, WebP, TIFF, GIF, BMP and PDF, resizes on the way and works through a whole batch. It asks once before saving next to your originals, then remembers.</p>
-          <p class="aside rise" style="--d:.1s"><span class="tier tier-free">Free forever</span> Pick a format, then drag the photo onto Knack. Or press it.</p>
+          <h2 id="convert-title" class="rise">Pick a format, convert the whole batch</h2>
+          <p class="rise" style="--d:.06s">Image Converter reads PNG, JPEG, HEIC, WebP, TIFF, GIF, BMP and PDF and writes any of them. Set the quality, cap the longest side, keep or strip metadata, and the copies land next to your originals.</p>
+          <p class="aside rise" style="--d:.1s"><span class="tier tier-free">Free forever</span> Pick a format and press Convert. A PNG of a phone photo comes out larger; JPEG and WebP come out smaller.</p>
         </div>
         <div class="split-stage">
-          <div class="cv-fit rise" style="--d:.08s">
-            <div class="cv-stage">
-              <div class="cv-src" aria-hidden="true"><div class="win-top"><i></i><i></i><i></i><b>Downloads</b></div></div>
-              <div class="cv-zone" aria-hidden="true">
-                <div class="cv-head"><img src="screenshots/icon.png" alt="" width="20" height="20" loading="lazy" /><b>Knack</b><span>Image Converter</span></div>
-                <div class="cv-drop"><span class="cv-hint">Drop images here</span></div>
-                <div class="cv-prog"><i></i></div>
-                <div class="cv-foot">Save as <b class="cv-fmt">JPG</b> · next to the original</div>
+          <div class="ic rise" style="--d:.08s">
+            <div class="ic-top" aria-hidden="true"><i></i><i></i><i></i><b>Knack</b></div>
+            <div class="ic-body">
+              <div class="ic-side">
+                <div class="ic-tool"><span class="ic-tile"><svg viewBox="0 0 24 24"><use href="#g-convert"/></svg></span><div><b>Image Converter</b><small>Convert anything</small></div></div>
+                <p class="ic-lbl">Format</p>
+                <div class="ic-fmts" role="radiogroup" aria-label="Output format">
+                  <button type="button" class="ic-fmt" role="radio" aria-checked="false" data-f="png">PNG</button>
+                  <button type="button" class="ic-fmt" role="radio" aria-checked="true" data-f="jpeg">JPEG</button>
+                  <button type="button" class="ic-fmt" role="radio" aria-checked="false" data-f="heic">HEIC</button>
+                  <button type="button" class="ic-fmt" role="radio" aria-checked="false" data-f="tiff">TIFF</button>
+                  <button type="button" class="ic-fmt" role="radio" aria-checked="false" data-f="gif">GIF</button>
+                  <button type="button" class="ic-fmt" role="radio" aria-checked="false" data-f="bmp">BMP</button>
+                  <button type="button" class="ic-fmt" role="radio" aria-checked="false" data-f="webp">WebP</button>
+                  <button type="button" class="ic-fmt" role="radio" aria-checked="false" data-f="pdf">PDF</button>
+                </div>
+                <div class="ic-q">
+                  <p class="ic-lbl">Quality <output class="ic-qv">90%</output></p>
+                  <input class="ic-range" type="range" min="10" max="100" step="5" value="90" aria-label="Quality" />
+                </div>
+                <div class="ic-row"><div><p class="ic-lbl">Resize</p><small class="ic-rs">Off</small></div><button type="button" class="ic-sw ic-resize" role="switch" aria-checked="false" aria-label="Resize to 2048 px on the longest side"><i></i></button></div>
+                <div class="ic-row"><div><p class="ic-lbl">Keep metadata</p><small>EXIF · GPS · color profile</small></div><button type="button" class="ic-sw ic-meta" role="switch" aria-checked="true" aria-label="Keep metadata"><i></i></button></div>
+                <div class="ic-row ic-pdf" hidden><div><p class="ic-lbl">Combine into one PDF</p><small>Pages in list order</small></div><button type="button" class="ic-sw ic-combine" role="switch" aria-checked="false" aria-label="Combine into one PDF"><i></i></button></div>
+                <p class="ic-lbl">Output folder</p>
+                <div class="ic-out"><svg viewBox="0 0 24 24"><use href="#g-folder"/></svg><span>Same as source</span></div>
+                <div class="ic-acts">
+                  <button type="button" class="ic-go">Convert</button>
+                  <button type="button" class="ic-clear">Clear all</button>
+                </div>
               </div>
-              <span class="cv-slot" aria-hidden="true"></span>
-              <span class="cv-other" aria-hidden="true"><span class="fi fi-pdf"><i></i><i></i><i></i><em>PDF</em></span><span class="fd-n">Notes.pdf</span></span>
-              <span class="cv-other" aria-hidden="true"><span class="fi fi-zip"></span><span class="fd-n">fonts.zip</span></span>
-              <button type="button" class="cv-file" aria-label="IMG_2041.HEIC, 3.1 MB. Drag it onto Knack, or press to convert it.">
-                <span class="cv-thumb"><span class="cv-ext">HEIC</span></span>
-                <span class="cv-name">IMG_2041.HEIC</span>
-                <span class="cv-meta"><span class="cv-size">3.1 MB</span><span class="cv-delta"></span></span>
-              </button>
-              <svg class="cursor" viewBox="0 0 15 22" aria-hidden="true"><path d="M0 0v17.2l4.5-4 3 8.8 2.7-1-3-8.4h7.8z" fill="#000" stroke="#fff" stroke-width="1.4" stroke-linejoin="round"/></svg>
+              <div class="ic-main">
+                <div class="ic-mh"><b>Files</b><span class="ic-count">3 images · 7.3 MB</span></div>
+                <ul class="ic-files" aria-label="Files to convert"></ul>
+              </div>
             </div>
           </div>
-          <div class="cv-controls rise" style="--d:.14s">
-            <div class="seg" role="radiogroup" aria-label="Output format">
-              <button type="button" class="seg-b" role="radio" aria-checked="true" data-fmt="jpg">JPG</button>
-              <button type="button" class="seg-b" role="radio" aria-checked="false" data-fmt="png">PNG</button>
-              <button type="button" class="seg-b" role="radio" aria-checked="false" data-fmt="webp">WebP</button>
-            </div>
-            <button type="button" class="ghost-btn cv-reset">Reset</button>
-          </div>
-          <p class="stage-status cv-status" aria-live="polite">Drag the photo onto Knack.</p>
+          <p class="stage-status ic-status" aria-live="polite">Press Convert to make JPEG copies.</p>
         </div>
       </div>
     </section>
@@ -312,8 +320,8 @@
       <div class="container split">
         <div class="split-copy">
           <h2 id="finder-title" class="rise">Right-click, and it's done</h2>
-          <p class="rise" style="--d:.06s">Switch on Knack's Finder actions once in Settings. Then right-click any image, open Services, and remove a background, compress, convert or extract the text without opening a window.</p>
-          <p class="aside rise" style="--d:.1s">Open in Knack… shows every tool that fits what you picked. Click a file here to try it.</p>
+          <p class="rise" style="--d:.06s">Switch on Knack's Finder actions once in Settings. Then right-click an image and choose a Knack action under Services. Knack comes forward on the right tool and gets started: remove the background, compress, convert or extract the text.</p>
+          <p class="aside rise" style="--d:.1s">Open in Knack… lists only the tools that fit what you picked. Click a file here to try it.</p>
         </div>
         <div class="split-stage">
           <div class="fd rise" style="--d:.08s">
@@ -371,40 +379,28 @@
       <div class="glow" aria-hidden="true"></div>
       <div class="container split reverse">
         <div class="split-copy">
-          <h2 id="stats-title" class="rise">Your Mac's vitals, next to the clock</h2>
-          <p class="rise" style="--d:.06s">System Stats keeps live CPU, memory and network numbers in the menu bar. Click them for disk space, battery and the processes using the most CPU right now.</p>
-          <p class="aside rise" style="--d:.1s"><span class="tier tier-paid">Pro</span> Pick which numbers show in the menu bar in Settings.</p>
+          <h2 id="stats-title" class="rise">Your Mac's vitals, one menu bar item each</h2>
+          <p class="rise" style="--d:.06s">System Stats gives every metric you switch on its own menu bar item: CPU, memory, network down or up, disk and battery. Click one for its own detail. CPU shows the busiest processes and how hard the performance and efficiency cores are working; memory shows what is using it.</p>
+          <p class="aside rise" style="--d:.1s"><span class="tier tier-paid">Pro</span> Pick the metrics and one of four styles in Settings. Try the styles below.</p>
         </div>
         <div class="split-stage">
-          <div class="mb rise" style="--d:.08s">
-            <div class="mb-bar">
-              <span class="mb-apple" aria-hidden="true"></span>
-              <b class="mb-app" aria-hidden="true">Finder</b>
-              <span class="mb-menus" aria-hidden="true"><i>File</i><i>Edit</i><i>View</i><i>Go</i></span>
-              <span class="mb-sp"></span>
-              <span class="mb-item" aria-label="Menu bar readout"><span>CPU <b class="v-cpu">23%</b></span><span class="mb-dot" aria-hidden="true">·</span><span>MEM <b class="v-mem">61%</b></span><span class="mb-dot mb-net-d" aria-hidden="true">·</span><span class="mb-net">↓ <b class="v-down">2.4 MB/s</b></span></span>
-              <span class="mb-sys" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4.5 9.5a11 11 0 0 1 15 0M7.5 12.8a6.6 6.6 0 0 1 9 0M10.6 16a2.2 2.2 0 0 1 2.8 0"/></svg><svg viewBox="0 0 30 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="2" y="7" width="22" height="10" rx="3"/><rect x="4.5" y="9.5" width="15" height="5" rx="1.2" fill="currentColor" stroke="none"/><path d="M26.5 10.5v3" stroke-linecap="round"/></svg><span>Fri 9:41</span></span>
+          <div class="sb rise" style="--d:.08s">
+            <div class="sb-bar">
+              <b class="sb-app" aria-hidden="true">Finder</b>
+              <span class="sb-menus" aria-hidden="true"><i>File</i><i>Edit</i></span>
+              <span class="sb-sp"></span>
+              <div class="sb-items" role="group" aria-label="System Stats menu bar items"></div>
+              <span class="sb-sys" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4.5 9.5a11 11 0 0 1 15 0M7.5 12.8a6.6 6.6 0 0 1 9 0M10.6 16a2.2 2.2 0 0 1 2.8 0"/></svg><span>Fri 9:41</span></span>
             </div>
-            <div class="mb-pop" role="group" aria-label="System Stats popover">
-              <div class="mb-head"><span class="mb-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><use href="#g-stats"/></svg></span><b>System Stats</b><span class="mb-live"><i></i>Live</span></div>
-              <div class="mb-cpu">
-                <div class="mb-cpu-t"><span>CPU</span><b class="v-cpu">23%</b></div>
-                <svg class="spark" viewBox="0 0 240 56" preserveAspectRatio="none" aria-hidden="true">
-                  <defs><linearGradient id="spark-fill" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="var(--pal-accent)" stop-opacity=".38"/><stop offset="1" stop-color="var(--pal-accent)" stop-opacity="0"/></linearGradient></defs>
-                  <polygon class="spark-area" fill="url(#spark-fill)" points="0,56 240,56"/>
-                  <polyline class="spark-line" fill="none" stroke="var(--pal-accent)" stroke-width="2" stroke-linejoin="round" stroke-linecap="round" vector-effect="non-scaling-stroke" points="0,56 240,56"/>
-                </svg>
-              </div>
-              <div class="mb-grid">
-                <div class="mb-cell"><span>Memory</span><b class="v-mem">61%</b><i class="mb-meter"><u class="m-mem" style="width:61%"></u></i><small class="v-memgb">9.8 of 16 GB</small></div>
-                <div class="mb-cell"><span>Network</span><b><span class="v-down">2.4 MB/s</span></b><small>↑ <span class="v-up">180 KB/s</span></small></div>
-                <div class="mb-cell"><span>Disk</span><b>412 GB free</b><i class="mb-meter"><u style="width:59%"></u></i><small>of 1 TB</small></div>
-                <div class="mb-cell"><span>Battery</span><b>84%</b><i class="mb-meter ok"><u style="width:84%"></u></i><small>On battery</small></div>
-              </div>
-              <p class="mb-sub">Top processes</p>
-              <ul class="mb-procs" aria-label="Top processes by CPU"></ul>
-            </div>
+            <div class="sb-pop" role="dialog" aria-live="off" hidden><span class="sb-arrow" aria-hidden="true"></span><div class="sb-pop-in"></div></div>
           </div>
+          <div class="seg sb-styles rise" style="--d:.14s" role="radiogroup" aria-label="Menu bar style">
+            <button type="button" class="seg-b" role="radio" aria-checked="false" data-style="iconRow">Icon · row</button>
+            <button type="button" class="seg-b" role="radio" aria-checked="false" data-style="iconStack">Icon · stacked</button>
+            <button type="button" class="seg-b" role="radio" aria-checked="true" data-style="textRow">Text · row</button>
+            <button type="button" class="seg-b" role="radio" aria-checked="false" data-style="textStack">Text · stacked</button>
+          </div>
+          <p class="stage-status sb-status" aria-live="polite">Click a menu bar item to open its detail.</p>
         </div>
       </div>
     </section>
@@ -417,13 +413,18 @@
           <div class="td-desk" aria-label="A Downloads folder with 12 files" role="img"></div>
         </div>
         <div class="sec-head center">
-          <h2 id="tidy-title" class="rise" style="--d:.08s">A tidy Downloads folder in one click</h2>
-          <p class="rise" style="--d:.14s">Tidy Folders sorts a folder by type, date or size. You see the plan before anything moves, and one click puts every file back.</p>
+          <h2 id="tidy-title" class="rise" style="--d:.08s">Preview the tidy, then apply it</h2>
+          <p class="rise" style="--d:.14s">Tidy Folders sorts a folder by type, month or size. It shows the plan before anything moves, Apply does the moving, and Undo puts every file back.</p>
           <div class="td-actions rise" style="--d:.2s">
-            <button type="button" class="btn primary td-go">Tidy by type</button>
+            <div class="seg td-modes" role="radiogroup" aria-label="Sort by">
+              <button type="button" class="seg-b" role="radio" aria-checked="true" data-mode="type">Type</button>
+              <button type="button" class="seg-b" role="radio" aria-checked="false" data-mode="month">Month</button>
+              <button type="button" class="seg-b" role="radio" aria-checked="false" data-mode="size">Size</button>
+            </div>
+            <button type="button" class="btn primary td-go">Apply 12 moves</button>
             <button type="button" class="btn outline td-undo" disabled>Undo</button>
           </div>
-          <p class="stage-status td-status" aria-live="polite"><span class="tier tier-paid">Pro</span> 12 files, no folders yet.</p>
+          <p class="stage-status td-status" aria-live="polite"><span class="tier tier-paid">Pro</span> Preview · 12 moves into 5 folders.</p>
         </div>
       </div>
     </section>
