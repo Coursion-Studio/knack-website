@@ -635,3 +635,8 @@ footer .guides a { color: var(--text-tertiary); }
 .ic-add { width: 100%; }
 .sec-head.center .td-status { margin-top: 22px; }
 .tool-grid .feature-card[style*="--tc"] .tile { color: var(--tc); background: linear-gradient(color-mix(in srgb, var(--tc) 16%, transparent), color-mix(in srgb, var(--tc) 16%, transparent)), rgb(20 18 26 / 0.92); box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--tc) 34%, transparent), inset 0 1px 0 rgb(255 255 255 / 0.12), 0 8px 16px rgb(0 0 0 / 0.35); }
+
+.film { position: relative; padding: 0 0 24px; }
+.film-frame { position: relative; max-width: 1080px; margin: 0 auto; aspect-ratio: 1920 / 824; border-radius: 22px; overflow: hidden; background: #0E0C14 url("media/knack-film-poster.jpg") center / cover no-repeat; box-shadow: inset 0 0 0 1px rgb(255 255 255 / 0.08), 0 40px 90px -40px color-mix(in srgb, var(--pal-accent) 55%, transparent), 0 30px 60px -30px rgb(0 0 0 / 0.8); }
+.film-video { display: block; width: 100%; height: 100%; object-fit: cover; }
+@media (max-width: 720px) { .film-frame { border-radius: 14px; } }

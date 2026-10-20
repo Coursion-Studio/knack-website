@@ -56,6 +56,16 @@
     }
   }
 
+  $$(".film-video").forEach((video) => {
+    if (calm()) { video.removeAttribute("autoplay"); video.pause(); return; }
+    const io = new IntersectionObserver(([e]) => {
+      if (e.isIntersecting && !document.hidden) video.play().catch(() => {});
+      else video.pause();
+    }, { threshold: 0.25 });
+    io.observe(video);
+    document.addEventListener("visibilitychange", () => { if (document.hidden) video.pause(); });
+  });
+
   function radioGroup(items, pick) {
     const check = (on) => items.forEach((b) => {
       b.setAttribute("aria-checked", b === on ? "true" : "false");
